@@ -27,3 +27,19 @@ class Subscription(db.Model):
     description = db.Column(db.String)
     status = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
+
+    user_id = db.Column(db.Integer)
+    service_id = db.Column(db.Integer)
+
+    def __repr__(self):
+        return f'Subscription for {self.type} created.'
+
+class Provider(db.Model):
+    __tablename__ = 'providers'
+
+    id = db.Column(db.Integer, primary_key=True)
+    company = db.Column(db.String)
+    location = db.Column(db.String)
+
+    def __repr__(self):
+        return f'Provder {self.company} located in {self.location} added.'
