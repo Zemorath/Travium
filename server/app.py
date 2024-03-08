@@ -27,6 +27,7 @@ class Signup(Resource):
             return new_user.to_dict(), 201
         else:
             return {"message": "Entry could not be processed"}, 422
+        
 
 class Login(Resource):
     
@@ -39,6 +40,7 @@ class Login(Resource):
             return user.to_dict(), 200
         else:
             return {"message": "User not found"}, 401
+        
 
 class Logout(Resource):
     
@@ -59,6 +61,7 @@ class CheckSession(Resource):
             return user.to_dict(), 200
         else:
             return {"message": "Unauthorized log in"}, 401
+        
 
 class Subscriptions_All(Resource):
     
@@ -79,9 +82,33 @@ class Subscriptions_All(Resource):
         db.session.commit()
 
         return new_sub.to_dict(), 201
+    
 
 class Providers(Resource):
-    "Providers will go here"
+
+    def get(self):
+        providers = [provider.to_dict() for provider in Provider.query.all()]
+        return make_response(jsonify(providers), 200)
+    
+    def post(self):
+        data=request.get_json()
+        new_provider = Provider(
+            company=data.get('company'),
+            location=data.get('location'),
+        )
+        db.session.add(new_provider)
+        db.session.commit()
+
+        return new_provider.to_dict(), 201
+
 
 class Subscriptions_Using(Resource):
-    "subscriptions_using will go here"
+    
+    def get(self):
+
+        if session['user_id']:
+            user_id = session['user_id']
+            subs = [sub.to_dict() for sub in Subscription.query.filter_by(Subscription.id == user_id)]
+            return make_response(jsonify(subs), 200)
+        else:
+            return {"message": "User not signed in"}, 401
