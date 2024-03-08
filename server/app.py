@@ -29,7 +29,16 @@ class Signup(Resource):
             return {"message": "Entry could not be processed"}, 422
 
 class Login(Resource):
-    "login will go here"
+    
+    def post(self):
+        username = request.get_json().get('username')
+        user = User.query.filter(User.username == username).first()
+
+        if user:
+            session['user_id'] = user.id
+            return user.to_dict(), 200
+        else:
+            return {"message": "User not found"}, 401
 
 class Logout(Resource):
     "logout will go here"
