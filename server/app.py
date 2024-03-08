@@ -41,7 +41,14 @@ class Login(Resource):
             return {"message": "User not found"}, 401
 
 class Logout(Resource):
-    "logout will go here"
+    
+    def delete(self):
+        if not session['user_id']:
+            return {"message": "Unauthorized access"}, 401
+        else:
+            session['user_id'] = None
+            return {}, 204
+        
 
 class CheckSession(Resource):
     
