@@ -35,7 +35,14 @@ class Logout(Resource):
     "logout will go here"
 
 class CheckSession(Resource):
-    "CheckSession will go here"
+    
+    def get(self):
+        user_id = session['user_id']
+        if user_id:
+            user = User.query.filter(user.id == user_id).first()
+            return user.to_dict(), 200
+        else:
+            return {"message": "Unauthorized log in"}, 401
 
 class Subscriptions_All(Resource):
     "Subscriptions_All will go here"
