@@ -65,6 +65,20 @@ class Subscriptions_All(Resource):
     def get(self):
         subscriptions = [sub.to_dict() for sub in Subscription.query.all()]
         return make_response(jsonify(subscriptions), 200)
+    
+    def post(self):
+        data = request.get_json()
+        new_sub = Subscription(
+            type=data.get('type'),
+            sub_price=data.get('sub_price'),
+            provider_price=data.get('provider_price'),
+            description=data.get('description'),
+            status=data.get('status'),
+        )
+        db.session.add(new_sub)
+        db.session.commit()
+
+        return new_sub.to_dict(), 201
 
 class Providers(Resource):
     "Providers will go here"
