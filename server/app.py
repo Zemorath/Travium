@@ -61,7 +61,10 @@ class CheckSession(Resource):
             return {"message": "Unauthorized log in"}, 401
 
 class Subscriptions_All(Resource):
-    "Subscriptions_All will go here"
+    
+    def get(self):
+        subscriptions = [sub.to_dict() for sub in Subscription.query.all()]
+        return make_response(jsonify(subscriptions), 200)
 
 class Providers(Resource):
     "Providers will go here"

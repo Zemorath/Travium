@@ -24,6 +24,17 @@ class User(db.Model):
         return f'{self.id}: User {self.username} created.'
     
 
+class Employee(db.Model):
+    __tablename__ = 'employees'    
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String, unique=True, nullable=False)
+    _password_hash = db.Column(db.String)
+    email = db.Column(db.String)
+
+    def __repr__(self):
+        return f'{self.id}: Employee: {self.username}'
+
     
 class Subscription(db.Model):
     __tablename__= 'subscriptions'
