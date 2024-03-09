@@ -62,6 +62,21 @@ class UserLogin(Resource):
             return {"message": "User not found"}, 401
         
 
+
+class EmployeeLogin(Resource):
+
+    def post(self):
+        email = request.get_json().get('email')
+        employee = Employee.query.filter(Employee.email == email).first()
+
+        if employee:
+            session['employee_id'] = employee.id
+            return employee.to_dict(), 200
+        else:
+            return {"message": "Employee not found"}, 401
+
+        
+
 class UserLogout(Resource):
     
     def delete(self):
@@ -72,6 +87,16 @@ class UserLogout(Resource):
             return {}, 204
         
 
+class EmployeeLogout(Resource):
+
+    def delete(self):
+        if not session['employee_id']:
+            return {"message": "Unauthorized access"}, 401
+        else:
+            session['employee_id'] = None
+            return {}, 204
+        
+
 class UserCheckSession(Resource):
     
     def get(self):
@@ -79,6 +104,17 @@ class UserCheckSession(Resource):
         if user_id:
             user = User.query.filter(user.id == user_id).first()
             return user.to_dict(), 200
+        else:
+            return {"message": "Unauthorized log in"}, 401
+        
+
+class EmployeeCheckSession(Resource):
+
+    def get(self):
+        employee_id = session['employee_id']
+        if employee_id:
+            employee = Employee.query.filter(employee.id == employee_id).first()
+            return employee.to_dict(), 200
         else:
             return {"message": "Unauthorized log in"}, 401
         
