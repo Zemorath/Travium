@@ -3,9 +3,9 @@ from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
 from config import app, db, api
-from models import User, Subscription, Provider
+from models import User, Subscription, Provider, Employee
 
-class Signup(Resource):
+class UserSignup(Resource):
     
     def post(self):
 
@@ -27,9 +27,29 @@ class Signup(Resource):
             return new_user.to_dict(), 201
         else:
             return {"message": "Entry could not be processed"}, 422
+
+class EmployeeSignup(Resource):
+
+    def post(self):
+
+        data = request.get_json()
+
+        if data.get('email') is not None:
+            new_employee = Employee(
+                username=data.get('username'),
+                email=data.get('email'),
+            )
+            new_employee.password_hash=data.get('password')
+            db.session.add(new_employee)
+            db.session.commit()
+            session['user_id'] = new_employee.id
+            return new_employee.to_dict(), 201
+        else:
+            return {"message": "Entry could not be processed"}, 422
+
         
 
-class Login(Resource):
+class UserLogin(Resource):
     
     def post(self):
         username = request.get_json().get('username')
@@ -42,7 +62,7 @@ class Login(Resource):
             return {"message": "User not found"}, 401
         
 
-class Logout(Resource):
+class UserLogout(Resource):
     
     def delete(self):
         if not session['user_id']:
@@ -52,7 +72,7 @@ class Logout(Resource):
             return {}, 204
         
 
-class CheckSession(Resource):
+class UserCheckSession(Resource):
     
     def get(self):
         user_id = session['user_id']
@@ -112,3 +132,34 @@ class Subscriptions_Using(Resource):
             return make_response(jsonify(subs), 200)
         else:
             return {"message": "User not signed in"}, 401
+        
+class UserByID(Resource):
+
+    def get(self):
+
+        if session['user_id']:
+            user_id = session['user_id']
+            user = User.query.filter(User.id==user_id).first().to_dict()
+            return make_response(jsonify(user), 200)
+        else:
+            return {"message": "User not signed in"}, 401
+    
+    def patch(self):
+
+        if session['user_id']:
+            user_id = session['user_id']
+            user = User.query.filter(User.id==user_id).first()
+            json_data = request.get_json()
+
+            username = json_data.get('username')
+            setattr(user, 'username', username)
+
+            db.session.add(user)
+            db.session.commit()
+
+            user_dict = user.to_dict()
+
+            return make_response(user_dict, 200)
+        else:
+            return {"message": "User not signed in"}, 401
+
