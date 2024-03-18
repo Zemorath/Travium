@@ -203,7 +203,7 @@ class UserByID(Resource):
 api.add_resource(UserSignup, '/usersignup', endpoint='usersignup')
 api.add_resource(EmployeeSignup, '/employeesignup', endpoint='employeesignup')
 api.add_resource(UserLogin, '/userlogin', endpoint='userlogin')
-api.add_resource(EmployeeSignup, '/employeesignup', endpoint='employeesignup')
+api.add_resource(EmployeeLogin, '/employeelogin', endpoint='employeelogin')
 api.add_resource(UserCheckSession, '/userchecksession', endpoint='userchecksession')
 api.add_resource(EmployeeCheckSession, '/employeechecksession', endpoint='employeechecksession')
 api.add_resource(Subscriptions_All, '/subscriptionsall', endpoint='subscriptionsall')
