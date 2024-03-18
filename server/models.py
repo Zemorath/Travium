@@ -18,7 +18,7 @@ class User(db.Model):
     phone_number = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
-    subscriptions = db.relationship('Subscription', back_popultes='user')
+    subscriptions = db.relationship('Subscription', back_populates='user')
 
     def __repr__(self):
         return f'{self.id}: User {self.username} created.'
@@ -69,7 +69,7 @@ class Provider(db.Model):
     company = db.Column(db.String)
     location = db.Column(db.String)
 
-    subscriptions = db.relationship('Subscription', back_popultes='provider')
+    subscriptions = db.relationship('Subscription', back_populates='provider')
 
     def __repr__(self):
         return f'Provder {self.company} located in {self.location} added.'

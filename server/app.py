@@ -199,3 +199,19 @@ class UserByID(Resource):
         else:
             return {"message": "User not signed in"}, 401
 
+
+api.add_resource(UserSignup, '/usersignup', endpoint='usersignup')
+api.add_resource(EmployeeSignup, '/employeesignup', endpoint='employeesignup')
+api.add_resource(UserLogin, '/userlogin', endpoint='userlogin')
+api.add_resource(EmployeeSignup, '/employeesignup', endpoint='employeesignup')
+api.add_resource(UserCheckSession, '/userchecksession', endpoint='userchecksession')
+api.add_resource(EmployeeCheckSession, '/employeechecksession', endpoint='employeechecksession')
+api.add_resource(Subscriptions_All, '/subscriptionsall', endpoint='subscriptionsall')
+api.add_resource(Subscriptions_Using, '/subscriptionsusing', endpoint='subscriptionsusing')
+api.add_resource(Providers, '/providers', endpoint='providers')
+
+
+
+
+if __name__ == '__main__':
+    app.run(port=5555, debug=True)
