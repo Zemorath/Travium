@@ -5,7 +5,12 @@ import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 
 function App({ useEffect, useState }) {
-    //App component goes here
+    
+    return (
+        <>
+            <NavBar/>
+        </>
+    )
 }
 
 export default App
