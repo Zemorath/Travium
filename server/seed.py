@@ -3,7 +3,7 @@ from random import random, randint, choice as rc
 from faker import Faker
 
 from app import app
-from models import db, Subscription, User, Employee
+from models import db, Subscription, User, Employee, Provider
 
 fake = Faker()
 
@@ -13,6 +13,7 @@ with app.app_context():
     Subscription.query.delete()
     User.query.delete()
     Employee.query.delete()
+    Provider.query.delete()
 
     fake = Faker()
 
@@ -79,5 +80,19 @@ with app.app_context():
     
     db.session.add_all(emps)
 
-    
-        
+
+    print("Creating providers...")
+    providers = []
+    company = ["HEB", "Walmart", "Spectrum", "Verizon", "AT&T", "Dish", "Walgreens"]
+    location = ["Texas", "California", "Florida", "New York"]
+    for i in range(10):
+        provider = Provider(
+            company=rc(company),
+            location=rc(location),
+        )
+
+        providers.append(provider)
+    db.session.add_all(providers)
+
+    db.session.commit()
+    print("Complete.")
