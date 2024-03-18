@@ -3,12 +3,16 @@ import { Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
+import SubscriptionList from "../pages/SubscriptionList";
 
 function App({ useEffect, useState }) {
     
     return (
         <>
             <NavBar/>
+            <main>
+                <SubscriptionList />
+            </main>
         </>
     )
 }
