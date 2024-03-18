@@ -13,7 +13,6 @@ with app.app_context():
     Subscription.query.delete()
     User.query.delete()
     Employee.query.delete()
-    Provider.query.delete()
 
     fake = Faker()
 
@@ -35,5 +34,10 @@ with app.app_context():
             last_name=fake.last_name(),
             age=randint(55, 105),
             email=fake.email()
-            
         )
+
+        user._password_hash = user.username + 'password'
+
+        users.append(user)
+
+        db.session.add_all(users)
