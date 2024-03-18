@@ -1,9 +1,10 @@
-from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
-db = SQLAlchemy()
+from config import db, bcrypt
 
 
-class User(db.Model):
+class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     serialize_rules = ('-subscriptions.user', '-_password_hash',)
@@ -23,7 +24,7 @@ class User(db.Model):
         return f'{self.id}: User {self.username} created.'
     
 
-class Employee(db.Model):
+class Employee(db.Model, SerializerMixin):
     __tablename__ = 'employees'    
 
     id = db.Column(db.Integer, primary_key=True)
@@ -35,7 +36,7 @@ class Employee(db.Model):
         return f'{self.id}: Employee: {self.username}'
 
     
-class Subscription(db.Model):
+class Subscription(db.Model, SerializerMixin):
     __tablename__= 'subscriptions'
 
     serialize_rules = ('-user.subscriptions', '-provider.subscriptions',)
@@ -45,7 +46,7 @@ class Subscription(db.Model):
     sub_price = db.Column(db.Float)
     provider_price = db.Column(db.Float)
     description = db.Column(db.String)
-    status = db.Column(db.Boolean)
+    status = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -59,7 +60,7 @@ class Subscription(db.Model):
     
 
 
-class Provider(db.Model):
+class Provider(db.Model, SerializerMixin):
     __tablename__ = 'providers'
 
     serialize_rules = ('-subscriptions.provider',)

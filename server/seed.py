@@ -1,4 +1,4 @@
-from random import random, randint, choice as rc
+from random import randint, choice as rc
 
 from faker import Faker
 
@@ -44,27 +44,27 @@ with app.app_context():
     db.session.add_all(users)
 
     print("Creating subscriptions...")
-    subs = []
+    subscriptions = []
     types = ["Pharmacy", "Phone", "Internet", "Groceries", "Hair", "Cable"]
-    _bool = ["True", "False"]
+    _bool = ["Active", "Not Active"]
     for i in range(100):
         description = fake.paragraph(nb_sentences=2)
 
         subscription = Subscription(
             type=rc(types),
-            sub_price = random.random(0, 5.00),
-            provider_price = random.random(0, 100.00),
+            sub_price = randint(0, 5.00),
+            provider_price = randint(0, 100.00),
             description=description,
             status=rc(_bool),
         )
 
-        subs.append(subscription)
+        subscriptions.append(subscription)
 
-    db.session.add_all(subs)
+    db.session.add_all(subscriptions)
 
 
     print("Creating employees...")
-    emps = []
+    employees = []
     for i in range(5):
 
         username = fake.first_name() + "" + fake.last_name()
@@ -76,9 +76,9 @@ with app.app_context():
 
         employee._password_hash = employee.username + 'password'
 
-        emps.append(employee)
+        employees.append(employee)
     
-    db.session.add_all(emps)
+    db.session.add_all(employees)
 
 
     print("Creating providers...")
@@ -94,5 +94,6 @@ with app.app_context():
         providers.append(provider)
     db.session.add_all(providers)
 
+    print("Committing changes...")
     db.session.commit()
     print("Complete.")
