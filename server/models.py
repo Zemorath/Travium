@@ -15,7 +15,6 @@ class User(db.Model):
     last_name = db.Column(db.String)
     age = db.Column(db.Integer)
     email = db.Column(db.String)
-    phone_number = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     subscriptions = db.relationship('Subscription', back_populates='user')

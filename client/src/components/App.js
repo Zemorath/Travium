@@ -5,8 +5,19 @@ import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import SubscriptionList from "../pages/SubscriptionList";
 
-function App({ useEffect, useState }) {
-    
+function App() {
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        fetch("/check_session").then((r) => {
+            if (r.ok) {
+                r.json().then((user) => setUser(user));
+            }
+        });
+    }, []);
+
+    if (!user) return <Login onLogin={setUser} />;
+
     return (
         <>
             <NavBar/>

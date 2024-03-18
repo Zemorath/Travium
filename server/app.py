@@ -18,7 +18,6 @@ class UserSignup(Resource):
                 last_name=data.get('last_name'),
                 age=data.get('age'),
                 email=data.get('email'),
-                phone_number=data.get('phone_number'),
             )
             new_user.password_hash=data.get('password')
             db.session.add(new_user)
