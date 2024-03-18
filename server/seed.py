@@ -43,6 +43,20 @@ with app.app_context():
 
     db.session.add_all(users)
 
+
+    print("Creating providers...")
+    providers = []
+    company = ["HEB", "Walmart", "Spectrum", "Verizon", "AT&T", "Dish", "Walgreens"]
+    location = ["Texas", "California", "Florida", "New York"]
+    for i in range(10):
+        provider = Provider(
+            company=rc(company),
+            location=rc(location),
+        )
+
+        providers.append(provider)
+    db.session.add_all(providers)
+
     print("Creating subscriptions...")
     subscriptions = []
     types = ["Pharmacy", "Phone", "Internet", "Groceries", "Hair", "Cable"]
@@ -52,12 +66,15 @@ with app.app_context():
 
         subscription = Subscription(
             type=rc(types),
-            sub_price = randint(0, 5.00),
-            provider_price = randint(0, 100.00),
+            sub_price = randint(4, 7),
+            provider_price = randint(10, 100.00),
             description=description,
             status=rc(_bool),
         )
 
+        subscription.provider = rc(providers)
+        subscription.user = rc(users)
+        
         subscriptions.append(subscription)
 
     db.session.add_all(subscriptions)
@@ -80,19 +97,6 @@ with app.app_context():
     
     db.session.add_all(employees)
 
-
-    print("Creating providers...")
-    providers = []
-    company = ["HEB", "Walmart", "Spectrum", "Verizon", "AT&T", "Dish", "Walgreens"]
-    location = ["Texas", "California", "Florida", "New York"]
-    for i in range(10):
-        provider = Provider(
-            company=rc(company),
-            location=rc(location),
-        )
-
-        providers.append(provider)
-    db.session.add_all(providers)
 
     print("Committing changes...")
     db.session.commit()

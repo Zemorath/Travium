@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Label } from "../styles";
 
 function LoginForm({ onLogin }) {
 
@@ -10,7 +11,7 @@ function LoginForm({ onLogin }) {
     function handleSubmit(e) {
         e.preventDefault();
         setIsLoading(true);
-        fetch("/login", {
+        fetch("/userlogin", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

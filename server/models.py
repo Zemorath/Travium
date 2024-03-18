@@ -7,7 +7,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-subscriptions.user', '-_password_hash',)
+    serialize_rules = ('-subscriptions.user', '-_password_hash', '-provider.user',)
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -19,6 +19,7 @@ class User(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     subscriptions = db.relationship('Subscription', back_populates='user')
+    provider = db.relationship('Provider', back_populates='user')
 
     def __repr__(self):
         return f'{self.id}: User {self.username} created.'
@@ -63,13 +64,14 @@ class Subscription(db.Model, SerializerMixin):
 class Provider(db.Model, SerializerMixin):
     __tablename__ = 'providers'
 
-    serialize_rules = ('-subscriptions.provider',)
+    serialize_rules = ('-subscriptions.provider', '-user.provider',)
 
     id = db.Column(db.Integer, primary_key=True)
     company = db.Column(db.String)
     location = db.Column(db.String)
 
     subscriptions = db.relationship('Subscription', back_populates='provider')
+    user = db.relationship('User', back_populates='provider')
 
     def __repr__(self):
         return f'Provder {self.company} located in {self.location} added.'
