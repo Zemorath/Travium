@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { Label, FormField, Input } from "../styles";
+import Label from "../styles/Label"
+import Button from "../styles/Button"
+import FormField from "../styles/FormField"
+import Input from "../styles/Input"
 
 function LoginForm({ onLogin }) {
 

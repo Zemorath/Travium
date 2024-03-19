@@ -6,4 +6,4 @@ const FormField = styled.div`
     }
 `;
 
-export default FormField
+export default FormField;
