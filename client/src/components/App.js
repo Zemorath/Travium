@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import SubscriptionList from "../pages/SubscriptionList";
+import Login from "../pages/Login";
 
 function App() {
     const [user, setUser] = useState(null);

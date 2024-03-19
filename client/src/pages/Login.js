@@ -1,6 +1,8 @@
 import { useState } from "react";
 import LoginForm from "../components/LoginForm";
-import SignUpForm from "../components/SignUpForm";
+import SignUp from "../components/SignUpForm";
+import { Button } from "../styles";
+import styled from "styled-components";
 
 function Login({ onLogin }) {
     const [showLogin, setShowLogin] = useState(true);
@@ -21,7 +23,7 @@ function Login({ onLogin }) {
                 </>
             ) : (
                 <>
-                    <SignUpForm onLogin={onLogin} />
+                    <SignUp onLogin={onLogin} />
                     <Divider />
                     <p>
                         Already have an account?
