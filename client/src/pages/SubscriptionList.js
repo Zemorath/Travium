@@ -16,7 +16,7 @@ function SubscriptionList() {
         <Wrapper>
             {subscriptions.length > 0 ? (
                 subscriptions.map((sub) => (
-                    <sub key={sub.id}>
+                    <Sub key={sub.id}>
                         <div>
                             <h2>{sub.type}</h2>
                             <p>
@@ -24,7 +24,7 @@ function SubscriptionList() {
                                 {sub.description}
                             </p>
                         </div>
-                    </sub>
+                    </Sub>
                 ))
             ) : (
                 <>
@@ -40,7 +40,7 @@ const Wrapper = styled.section`
     margin: 40px auto;
 `;
 
-const Recipe = styled.article`
+const Sub = styled.article`
     margin-bottom: 240px;
 `;
 

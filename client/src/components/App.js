@@ -21,7 +21,7 @@ function App() {
 
     return (
         <>
-            <NavBar/>
+            <NavBar user={user} setUser={setUser}/>
             <main>
                 <SubscriptionList />
             </main>
