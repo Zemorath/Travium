@@ -9,9 +9,10 @@ function SubscriptionList() {
     useEffect(() => {
         fetch('/subscriptionsusing')
             .then((r) => r.json())
-            .then(setsubScriptions);
+            .then(setsubScriptions)
     }, []);
 
+    console.log(subscriptions)
     return (
         <Wrapper>
             {subscriptions.length > 0 ? (
