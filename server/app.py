@@ -101,7 +101,7 @@ class UserCheckSession(Resource):
     def get(self):
         user_id = session['user_id']
         if user_id:
-            user = User.query.filter(user.id == user_id).first()
+            user = User.query.filter(User.id == user_id).first()
             return user.to_dict(), 200
         else:
             return {"message": "Unauthorized log in"}, 401
@@ -163,7 +163,7 @@ class Subscriptions_Using(Resource):
 
         if session['user_id']:
             user_id = session['user_id']
-            subs = [sub.to_dict() for sub in Subscription.query.filter_by(Subscription.id == user_id)]
+            subs = [sub.to_dict() for sub in Subscription.query.filter(Subscription.id == user_id)]
             return make_response(jsonify(subs), 200)
         else:
             return {"message": "User not signed in"}, 401

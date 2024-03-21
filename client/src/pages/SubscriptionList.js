@@ -7,7 +7,7 @@ function SubscriptionList() {
     const [subscriptions, setsubScriptions] = useState([]);
 
     useEffect(() => {
-        fetch('/subscriptions')
+        fetch('/subscriptionsusing')
             .then((r) => r.json())
             .then(setsubScriptions);
     }, []);
