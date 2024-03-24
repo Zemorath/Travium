@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { RiArrowDropDownLine } from "react-icons/ri"
 import "../styles/Accordion.css";
+import styled from "styled-components";
 
 
 
@@ -49,21 +50,39 @@ const Accordion = () => {
     }
 
     return (
-        <div className='container'>
-            {subscriptions.map((item, index) => (
-                <AccordionItem 
-                    key={index} 
-                    type={item.type} 
-                    sub_price={item.sub_price} 
-                    provider_price={item.provider_price} 
-                    description={item.description} 
-                    status={item.status}
-                    isOpen={activeIndex === index}
-                    onClick={() => handleItemClick(index)}
-                />    
-            ))}
-        </div>
+        <Wrapper>
+            <div className='container'>
+                <Heading>Current Services</Heading>
+                {subscriptions.map((item, index) => (
+                    <AccordionItem 
+                        key={index} 
+                        type={item.type} 
+                        sub_price={item.sub_price} 
+                        provider_price={item.provider_price} 
+                        description={item.description} 
+                        status={item.status}
+                        isOpen={activeIndex === index}
+                        onClick={() => handleItemClick(index)}
+                    />    
+                ))}
+            </div>
+        </Wrapper>
     )
 };
+
+const Heading = styled.h1`
+    font-size: 36px;
+    left: 50%;
+    max width: 100%;
+    width: 800px;
+    margin-bottom: 25px;
+`;
+
+const Wrapper = styled.section`
+    max-width: 1000px;
+    margin: 40px auto;
+    border-left: 5px double black;
+    padding-left: 50px;
+`;
 
 export default Accordion

@@ -3,8 +3,10 @@ import { Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
-import SubscriptionList from "../pages/SubscriptionList";
 import Login from "../pages/Login";
+import SubscriptionPage from "../pages/SubscriptionPage";
+import Account from "../pages/Account";
+import Home from "../pages/Home"
 
 function App() {
     const [user, setUser] = useState(null);
@@ -23,7 +25,17 @@ function App() {
         <>
             <NavBar user={user} setUser={setUser}/>
             <main>
-                <SubscriptionList />
+                <Switch>
+                    <Route path="/services">
+                        <SubscriptionPage />
+                    </Route>
+                    <Route path="/account">
+                        <Account />
+                    </Route>
+                    <Route path="/">
+                        <Home />
+                    </Route>
+                </Switch>
             </main>
         </>
     )
