@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import '../styles/NavBar.css';
-import Button from "../styles/Button"
+import Button from "../styles/Button";
+import logo from '../assets/Travium.png';
 
 
 function NavBar({ user, setUser }) {
@@ -9,12 +10,13 @@ function NavBar({ user, setUser }) {
     function handleLogoutClick() {
         fetch("/userlogout", { method: 'DELETE'}).then((r) => {
             if (r.ok) {
-                setUser(null)
+                setUser(null);
             }
         })
     }
     return (
         <nav className='navbar'>
+            <img src={logo} alt="logo" class="logo" width='250' height='200'/>
             <ul>
                 <li>
                     <Link to='/' className="nav-link">Home</Link>
