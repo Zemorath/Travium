@@ -209,6 +209,7 @@ api.add_resource(EmployeeCheckSession, '/employeechecksession', endpoint='employ
 api.add_resource(Subscriptions_All, '/subscriptionsall', endpoint='subscriptionsall')
 api.add_resource(Subscriptions_Using, '/subscriptionsusing', endpoint='subscriptionsusing')
 api.add_resource(Providers, '/providers', endpoint='providers')
+api.add_resource(UserByID, '/userinfo', endpoint='userinfo')
 
 
 
