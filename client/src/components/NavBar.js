@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import '../styles/NavBar.css';
 import Button from "../styles/Button";
-import logo from '../assets/Travium.png';
+import logo from '../assets/Travium_transparent.png';
 
 
 function NavBar({ user, setUser }) {
@@ -15,23 +15,29 @@ function NavBar({ user, setUser }) {
         })
     }
     return (
-        <nav className='navbar'>
+        <div className="navbar">
+
             <img src={logo} alt="logo" class="logo" width='250' height='200'/>
-            <ul>
-                <li>
-                    <Link to='/' className="nav-link">Home</Link>
-                </li>
-                <li>
-                    <Link to='/services' className="nav-link">Services</Link>
-                </li>
-                <li>
-                    <Link to='/account' className="nav-link">Account</Link>
-                </li>
-                <Button variant="outline" onClick={handleLogoutClick}>
-                    Logout
-                </Button>
-            </ul>
-        </nav>
+
+            <nav>
+                <ul>
+                    <li>
+                        <Link to='/' className="nav-link">Home</Link>
+                    </li>
+                    <li>
+                        <Link to='/services' className="nav-link">Services</Link>
+                    </li>
+                    <li>
+                        <Link to='/account' className="nav-link">Account</Link>
+                    </li>
+                    <li>
+                        <Button variant="outline" onClick={handleLogoutClick}>
+                            Logout
+                        </Button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     );
 };
 
