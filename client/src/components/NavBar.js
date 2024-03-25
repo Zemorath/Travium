@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import '../styles/NavBar.css';
 import Button from "../styles/Button";
-import logo from '../assets/Travium_transparent.png';
+import logo from '../assets/Travium.png';
 
 
 function NavBar({ user, setUser }) {
@@ -17,7 +17,7 @@ function NavBar({ user, setUser }) {
     return (
         <div className="navbar">
 
-            <img src={logo} alt="logo" class="logo" width='250' height='200'/>
+            <img src={logo} alt="logo" class="logo" width='170' height='90'/>
 
             <nav>
                 <ul>
@@ -30,11 +30,11 @@ function NavBar({ user, setUser }) {
                     <li>
                         <Link to='/account' className="nav-link">Account</Link>
                     </li>
-                    <li>
-                        <Button variant="outline" onClick={handleLogoutClick}>
-                            Logout
-                        </Button>
-                    </li>
+                    
+                    <Button className="logout" variant="outline" onClick={handleLogoutClick}>
+                        Logout
+                    </Button>
+                    
                 </ul>
             </nav>
         </div>
