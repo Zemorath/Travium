@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import SubscriptionPage from "../pages/SubscriptionPage";
 import Account from "../pages/Account";
 import Home from "../pages/Home"
+import NewSubscription from "../pages/NewSubscription";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -26,6 +27,9 @@ function App() {
             <NavBar user={user} setUser={setUser}/>
             <main>
                 <Switch>
+                    <Route path="/services/newsubscription">
+                        <NewSubscription />
+                    </Route>
                     <Route path="/services">
                         <SubscriptionPage />
                     </Route>

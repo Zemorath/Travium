@@ -91,3 +91,13 @@ body {
     color: black;
     transition: 0.4s;
 }
+
+.sub-link {
+    text-decoration: none;
+    color: white;
+}
+
+.sub-link:hover {
+    color: black;
+    transition: 0.4s;
+}

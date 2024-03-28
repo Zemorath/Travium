@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { RiArrowDropDownLine } from "react-icons/ri"
 import "../styles/Accordion.css";
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
 
 
 
@@ -67,9 +68,13 @@ const Accordion = () => {
                     />    
                 ))}
                 <div className="sub-button-container">
+                
                 <button className='sub-button'>
+                    <Link to="/services/newsubscription" className="sub-link">
                     Add a new subscription!
+                    </Link>
                 </button>
+            
             </div>
             </div>
         </Wrapper>

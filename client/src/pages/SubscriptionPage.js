@@ -8,11 +8,6 @@ function SubscriptionPage() {
             <div>
                 <Accordion />
             </div>
-            {/* <div className="sub-button-container">
-                <button className='sub-button'>
-                    Add a new subscription!
-                </button>
-            </div> */}
         </>
     ) 
 }
