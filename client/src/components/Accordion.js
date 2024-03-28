@@ -14,19 +14,20 @@ const AccordionItem = ({ type, sub_price, provider_price, description, status, i
                 <p className='type-content'>{type}</p>
                 <RiArrowDropDownLine className={`arrow ${isOpen ? 'active' : ''}`} />
             </button>
-
-            <div ref={contentHeight} className="info-container" style={
-                isOpen
-                ? { height: contentHeight.current.scrollHeight }
-                : { height: "0px" }
-            }>
-                <p className="info-content">
-                    {description}
-                    <hr />
-                    Price: {sub_price + provider_price}
-                    <hr />
-                    Active: {status}
-                </p>
+            <div>
+                <div ref={contentHeight} className="info-container" style={
+                    isOpen
+                    ? { height: contentHeight.current.scrollHeight }
+                    : { height: "0px" }
+                }>
+                    <p className="info-content">
+                        {description}
+                        <hr />
+                        Price: {sub_price + provider_price}
+                        <hr />
+                        Active: {status}
+                    </p>
+                </div>
             </div>
         </div>
     )
@@ -65,6 +66,11 @@ const Accordion = () => {
                         onClick={() => handleItemClick(index)}
                     />    
                 ))}
+                <div className="sub-button-container">
+                <button className='sub-button'>
+                    Add a new subscription!
+                </button>
+            </div>
             </div>
         </Wrapper>
     )
