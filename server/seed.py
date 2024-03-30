@@ -3,7 +3,7 @@ from random import randint, choice as rc
 from faker import Faker
 
 from app import app
-from models import db, Subscription, User, Employee, Provider
+from models import db, Subscription, User, Employee, Provider, Available_Services
 
 fake = Faker()
 
@@ -56,6 +56,17 @@ with app.app_context():
 
         providers.append(provider)
     db.session.add_all(providers)
+
+    print("Creating available services...")
+    available_services = []
+    services = ["Pharmacy", "Phone", "Internet", "Groceries", "Hair", "Cable"]
+    for i in services:
+        service = Available_Services(
+            type=i,
+        )
+
+        available_services.append(service)
+    db.session.add_all(available_services)
 
     print("Creating subscriptions...")
     subscriptions = []

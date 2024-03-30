@@ -60,6 +60,16 @@ class Subscription(db.Model, SerializerMixin):
         return f'Subscription for {self.type} created.'
     
 
+class Available_Services(db.Model, SerializerMixin):
+    __tablename__='available_services'    
+
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+
+    def __repr__(self):
+        return f'Service {self.type} now available'
+
 
 class Provider(db.Model, SerializerMixin):
     __tablename__ = 'providers'

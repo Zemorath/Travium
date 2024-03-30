@@ -3,7 +3,7 @@ from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
 from config import app, db, api
-from models import User, Subscription, Provider, Employee
+from models import User, Subscription, Provider, Employee, Available_Services
 
 class UserSignup(Resource):
     
@@ -121,9 +121,15 @@ class EmployeeCheckSession(Resource):
 class Subscriptions_All(Resource):
     
     def get(self):
-        subscriptions = [sub.to_dict() for sub in Subscription.query.all()]
+        subscriptions = [sub.to_dict() for sub in Subscription.query.distinct()]
         return make_response(jsonify(subscriptions), 200)
     
+
+class All_Available_Services(Resource):
+
+    def get(self):
+        services = [item.to_dict() for item in Available_Services.query.all()]
+        return make_response(jsonify(services), 200)
     
 
 class Providers(Resource):
@@ -198,6 +204,9 @@ class UserByID(Resource):
             return make_response(user_dict, 200)
         else:
             return {"message": "User not signed in"}, 401
+        
+
+
 
 
 api.add_resource(UserSignup, '/usersignup', endpoint='usersignup')
@@ -211,6 +220,7 @@ api.add_resource(Subscriptions_All, '/subscriptionsall', endpoint='subscriptions
 api.add_resource(Subscriptions_Using, '/subscriptionsusing', endpoint='subscriptionsusing')
 api.add_resource(Providers, '/providers', endpoint='providers')
 api.add_resource(UserByID, '/userinfo', endpoint='userinfo')
+api.add_resource(All_Available_Services, '/availableservices', endpoint='availableservices')
 
 
 
