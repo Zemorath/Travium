@@ -14,6 +14,7 @@ with app.app_context():
     User.query.delete()
     Employee.query.delete()
     Provider.query.delete()
+    Available_Services.query.delete()
 
     fake = Faker()
 
@@ -22,7 +23,7 @@ with app.app_context():
     users = []
     usernames = []
 
-    for i in range(20):
+    for n in range(20):
 
         username = fake.first_name()
         while username in usernames:
@@ -48,22 +49,21 @@ with app.app_context():
     providers = []
     company = ["HEB", "Walmart", "Spectrum", "Verizon", "AT&T", "Dish", "Walgreens"]
     location = ["Texas", "California", "Florida", "New York"]
-    for i in company:
-        for a in location:
+    for a in company:
+        for b in location:
             provider = Provider(
-                company=i,
-                location=a,
+                company=a,
+                location=b,
             )
-
-        providers.append(provider)
+            providers.append(provider)
     db.session.add_all(providers)
 
     print("Creating available services...")
     available_services = []
     services = ["Pharmacy", "Phone", "Internet", "Groceries", "Hair", "Cable"]
-    for i in services:
+    for s in services:
         service = Available_Services(
-            type=i,
+            type=s,
         )
 
         available_services.append(service)
@@ -73,7 +73,7 @@ with app.app_context():
     subscriptions = []
     types = ["Pharmacy", "Phone", "Internet", "Groceries", "Hair", "Cable"]
     _bool = ["Active", "Not Active"]
-    for i in range(100):
+    for t in range(100):
         description = fake.paragraph(nb_sentences=2)
 
         subscription = Subscription(
