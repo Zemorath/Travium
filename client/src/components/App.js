@@ -28,7 +28,7 @@ function App() {
             <main>
                 <Switch>
                     <Route path="/services/newsubscription">
-                        <NewSubscription />
+                        <NewSubscription user={user}/>
                     </Route>
                     <Route path="/services">
                         <SubscriptionPage />

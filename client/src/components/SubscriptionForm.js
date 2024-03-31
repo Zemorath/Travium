@@ -3,9 +3,17 @@ import { Formik, useFormik, handleChange } from 'formik';
 import styled from "styled-components";
 
 
-function SubForm() {
+function SubForm({ user }) {
 
     var counter = 0;
+    const [providers, setProviders] = useState([])
+    useEffect(() => {
+        fetch('/providers').then((r) => {
+            if (r.ok) {
+                r.json().then((providers) => setProviders(providers))
+            }
+        });
+    }, []);
 
     const [services, setServices] = useState([])
     useEffect(() => {
@@ -17,9 +25,8 @@ function SubForm() {
     }, []);
 
 
+
     const handleSubmit = async (values) => {
-
-
         try {
             const response = await fetch("/subscriptionsusing", {
                 method: "POST",
@@ -40,12 +47,15 @@ function SubForm() {
     }
 
 
+
     const formik = useFormik ({
         initialValues: {
             type: '',
             sub_price: 0,
             description: '',
             status: 'active',
+            user_id: {user},
+            provider_id: 0,
         },
         onSubmit: handleSubmit
     })
@@ -55,11 +65,20 @@ function SubForm() {
             <form onSubmit={formik.handleSubmit}>
                 <h1>Add New Service</h1>
                 <FieldContainer>
-                    <Label onChange={formik.handleChange} value={formik.values.type}>Service:</Label>
-                    <select>
+                    <Label>Service:</Label>
+                    <select onChange={formik.handleChange} value={formik.values.type}>
                         <option> SELECT </option>
                         {services.map((item, index) => (
                             <option key={index} value={item}>{item.type}</option>
+                        ))}
+                    </select>
+                </FieldContainer>
+                <FieldContainer>
+                    <Label>Choose Provider:</Label>
+                    <select onChange={formik.handleChange} value={formik.values.provider_id}>
+                        <option> SELECT </option>
+                        {providers.map((item, index) => (
+                            <option key={index} value={item}>{item.company}</option>
                         ))}
                     </select>
                 </FieldContainer>
@@ -96,7 +115,7 @@ const Description = styled.input`
 
 
 const FieldContainer = styled.div`
-    padding-top: 20px;
+    padding-top: 15px;
 `
 
 const FormContainer = styled.div`
