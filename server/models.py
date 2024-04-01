@@ -78,7 +78,6 @@ class Provider(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     company = db.Column(db.String)
-    location = db.Column(db.String)
 
     subscriptions = db.relationship('Subscription', back_populates='provider')
     # user = db.relationship('User', back_populates='provider')

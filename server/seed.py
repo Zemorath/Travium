@@ -48,14 +48,11 @@ with app.app_context():
     print("Creating providers...")
     providers = []
     company = ["HEB", "Walmart", "Spectrum", "Verizon", "AT&T", "Dish", "Walgreens"]
-    location = ["Texas", "California", "Florida", "New York"]
     for a in company:
-        for b in location:
-            provider = Provider(
-                company=a,
-                location=b,
-            )
-            providers.append(provider)
+        provider = Provider(
+            company=a,
+        )
+        providers.append(provider)
     db.session.add_all(providers)
 
     print("Creating available services...")

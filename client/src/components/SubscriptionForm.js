@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Formik, useFormik, handleChange } from 'formik';
+import { Formik, handleChange, Field, Form } from 'formik';
 import styled from "styled-components";
+import FormikControl from './FormikControl'
 
 
 function SubForm({ user }) {
 
-    var counter = 0;
     const [providers, setProviders] = useState([])
     useEffect(() => {
         fetch('/providers').then((r) => {
@@ -23,7 +23,6 @@ function SubForm({ user }) {
             }
         });
     }, []);
-
 
 
     const handleSubmit = async (values) => {
@@ -46,39 +45,54 @@ function SubForm({ user }) {
         }
     }
 
+    const intitialValues = {
+        type: '',
+        sub_price: 0,
+        description: '',
+        status: 'active',
+        user_id: {user},
+        provider_id: 0,
+    }
 
-
-    const formik = useFormik ({
-        initialValues: {
-            type: '',
-            sub_price: 0,
-            description: '',
-            status: 'active',
-            user_id: {user},
-            provider_id: 0,
-        },
-        onSubmit: handleSubmit
-    })
+    // const formik = useFormik ({
+    //     // initialValues: {
+    //     //     type: '',
+    //     //     sub_price: 0,
+    //     //     description: '',
+    //     //     status: 'active',
+    //     //     user_id: {user},
+    //     //     provider_id: 0,
+    //     // },
+    //     onSubmit: handleSubmit
+    // })
 
     return (
-        <FormContainer>
-            <form onSubmit={formik.handleSubmit}>
+        <Formik 
+            initialValues={intitialValues}
+            onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <h1>Add New Service</h1>
-                <FieldContainer>
+                {/* <FieldContainer>
                     <Label>Service:</Label>
-                    <select onChange={formik.handleChange} value={formik.values.type}>
-                        <option> SELECT </option>
+                    <select onChange={formik.handleChange} value={formik.values.type} placeholder="Select">
                         {services.map((item, index) => (
                             <option key={index} value={item}>{item.type}</option>
                         ))}
                     </select>
-                </FieldContainer>
+                </FieldContainer> */}
+                <FormikControl
+                    control='select'
+                    label='Select a service'
+                    name='type'
+                    options={services}
+                    { ... formik.getFieldProps('type')}
+                />
                 <FieldContainer>
                     <Label>Choose Provider:</Label>
                     <select onChange={formik.handleChange} value={formik.values.provider_id}>
                         <option> SELECT </option>
                         {providers.map((item, index) => (
-                            <option key={index} value={item}>{item.company}</option>
+                            <option key={index} value={item.company}>{item.company}</option>
                         ))}
                     </select>
                 </FieldContainer>
@@ -101,9 +115,14 @@ function SubForm({ user }) {
                         onChange={formik.handleChange}
                         value={formik.values.description}
                     />
-                </FieldContainer>    
+                </FieldContainer>
+                <FieldContainer>
+                    <button variant="fill" color="primary" type="submit">
+                        {formik.values.isLoading ? "Loading..." : "Submit"}
+                    </button>
+                </FieldContainer> 
             </form>
-        </FormContainer>
+        </Formik>
     )
 }
 
@@ -123,7 +142,7 @@ const FormContainer = styled.div`
         margin-bottom: 12px;
     }
     width: 30%;
-    height: 500px;
+    height: 550px;
     margin: auto;
     border: 3px solid black;
     padding: 10px;
