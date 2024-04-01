@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Formik, handleChange, Field, Form } from 'formik';
+import { Formik, handleChange, Field, Form, ErrorMessage } from 'formik';
 import styled from "styled-components";
 import FormikControl from './FormikControl'
 
@@ -70,7 +70,7 @@ function SubForm({ user }) {
         <Formik 
             initialValues={intitialValues}
             onSubmit={handleSubmit}>
-            <form onSubmit={handleSubmit}>
+            <Form>
                 <h1>Add New Service</h1>
                 {/* <FieldContainer>
                     <Label>Service:</Label>
@@ -80,48 +80,55 @@ function SubForm({ user }) {
                         ))}
                     </select>
                 </FieldContainer> */}
-                <FormikControl
-                    control='select'
-                    label='Select a service'
-                    name='type'
-                    options={services}
-                    { ... formik.getFieldProps('type')}
-                />
                 <FieldContainer>
-                    <Label>Choose Provider:</Label>
-                    <select onChange={formik.handleChange} value={formik.values.provider_id}>
+                    <FormikControl
+                        control='selectServices'
+                        label='Select a service'
+                        name='type'
+                        options={services}
+                    />
+                    <ErrorMessage name='type' />
+                </FieldContainer>
+                <FieldContainer>
+                    {/* <Label>Choose Provider:</Label> */}
+                    {/* <select onChange={handleChange} value={values.provider_id}>
                         <option> SELECT </option>
                         {providers.map((item, index) => (
                             <option key={index} value={item.company}>{item.company}</option>
                         ))}
-                    </select>
+                    </select> */}
+                    <FormikControl 
+                        control='selectProviders'
+                        label="Select a Provider"
+                        name='provider_id'
+                        options={providers}
+                    />
+                    <ErrorMessage name='provider_id' />
                 </FieldContainer>
                 <FieldContainer>
                     <Label>Please enter how much your service typically costs: </Label>
-                    <input
+                    <Field
                         type="number"
                         id="sub_price"
                         name="sub_price"
-                        onChange={formik.handleChange}
-                        value={formik.values.sub_price}
                     />
+                    <ErrorMessage name='sub_price' />
                 </FieldContainer>    
                 <FieldContainer>
                     <Label>Please write a brief description about your service: </Label>
-                    <Description
+                    <Field
                         type="text"
                         id="description"
                         name="description"
-                        onChange={formik.handleChange}
-                        value={formik.values.description}
                     />
+                    <ErrorMessage name='description' />
                 </FieldContainer>
                 <FieldContainer>
                     <button variant="fill" color="primary" type="submit">
-                        {formik.values.isLoading ? "Loading..." : "Submit"}
+                        Submit
                     </button>
                 </FieldContainer> 
-            </form>
+            </Form>
         </Formik>
     )
 }
