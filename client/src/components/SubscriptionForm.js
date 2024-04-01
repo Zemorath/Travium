@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Formik, handleChange, Field, Form, ErrorMessage } from 'formik';
 import styled from "styled-components";
 import FormikControl from './FormikControl'
+import "../styles/SubForm.css"
 
 
 function SubForm({ user }) {
@@ -70,7 +71,7 @@ function SubForm({ user }) {
         <Formik 
             initialValues={intitialValues}
             onSubmit={handleSubmit}>
-            <Form>
+            <Form className="sub-form">
                 <h1>Add New Service</h1>
                 {/* <FieldContainer>
                     <Label>Service:</Label>
@@ -120,6 +121,7 @@ function SubForm({ user }) {
                         type="text"
                         id="description"
                         name="description"
+                        className='description'
                     />
                     <ErrorMessage name='description' />
                 </FieldContainer>
@@ -133,29 +135,11 @@ function SubForm({ user }) {
     )
 }
 
-const Description = styled.input`
-    width: 70%;
-    height: 100px;
-`
-
-
 
 const FieldContainer = styled.div`
     padding-top: 15px;
 `
 
-const FormContainer = styled.div`
-    &:not(:last-child) {
-        margin-bottom: 12px;
-    }
-    width: 30%;
-    height: 550px;
-    margin: auto;
-    border: 3px solid black;
-    padding: 10px;
-    margin-top: 5%;
-    text-align: center;
-`
 
 const Label = styled.label`
     color: black;

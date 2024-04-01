@@ -1,0 +1,18 @@
+
+.sub-form {
+    /* &:not(:last-child) {
+        margin-bottom: 12px;
+    } */
+    width: 30%;
+    height: 550px;
+    margin: auto;
+    border: 3px solid black;
+    padding: 10px;
+    margin-top: 5%;
+    text-align: center;    
+}
+
+.description {
+    width: 70%;
+    height: 100px;
+}

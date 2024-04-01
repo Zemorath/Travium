@@ -34,7 +34,7 @@ function App() {
                         <SubscriptionPage />
                     </Route>
                     <Route path="/account">
-                        <Account />
+                        <Account user={user}/>
                     </Route>
                     <Route path="/">
                         <Home />

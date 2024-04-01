@@ -9,9 +9,9 @@ function SelectProviders(props) {
             <label htmlFor={name}>{label}</label>
             <Field as='select' id={name} name={name} {...rest}>
                 {
-                    options.map(option => {
+                    options.map((option, index) => {
                         return (
-                            <option key={option.company} value={option.company}>
+                            <option key={option.company} value={index + 1}>
                                 {option.company}
                             </option>
                         )
