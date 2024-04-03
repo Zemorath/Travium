@@ -19,7 +19,7 @@ class UserSignup(Resource):
                 age=data.get('age'),
                 email=data.get('email'),
             )
-            new_user.password_hash=data.get('password')
+            new_user._password_hash=data.get('password')
             db.session.add(new_user)
             db.session.commit()
             session['user_id'] = new_user.id

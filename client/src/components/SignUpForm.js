@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { Formik, useFormik, handleChange } from 'formik';
+import Label from "../styles/Label"
+import Button from "../styles/Button"
+import FormField from "../styles/FormField"
+import Input from "../styles/Input"
 
 
 function SignUp({ onLogin }) {
@@ -18,6 +22,7 @@ function SignUp({ onLogin }) {
 
             if (response.ok) {
                 console.log("Form submitted", values);
+                response.json().then((user) => onLogin(user))
             } else {
                 console.error("An error occurred while submitting the form.");
             } 
@@ -44,8 +49,8 @@ function SignUp({ onLogin }) {
     return (
         <div>
             <form onSubmit={formik.handleSubmit}>
-                <label htmlFor='username'>Username</label>
-                <input
+                <Label htmlFor='username'>Username</Label>
+                <Input
                     type='text'
                     id='username'
                     name='username'
@@ -53,8 +58,8 @@ function SignUp({ onLogin }) {
                     value={formik.values.username}
                     label='Username'
                 />
-                <label htmlFor='password'>Password</label>
-                <input
+                <Label htmlFor='password'>Password</Label>
+                <Input
                     type='password'
                     id='password'
                     name='password'
@@ -62,8 +67,8 @@ function SignUp({ onLogin }) {
                     value={formik.values.password}
                     label="Password"
                 />
-                <label htmlFor='first_name'>First Name</label>
-                <input
+                <Label htmlFor='first_name'>First Name</Label>
+                <Input
                     type='text'
                     id='first_name'
                     name='first_name'
@@ -71,8 +76,8 @@ function SignUp({ onLogin }) {
                     value={formik.values.first_name}
                     label='First Name'
                 />
-                <label htmlFor='last_name'>Last Name</label>
-                <input
+                <Label htmlFor='last_name'>Last Name</Label>
+                <Input
                     type='text'
                     id='last_name'
                     name='last_name'
@@ -80,8 +85,8 @@ function SignUp({ onLogin }) {
                     value={formik.values.last_name}
                     label='Last Name'
                 />
-                <label htmlFor='age'>Age</label>
-                <input
+                <Label htmlFor='age'>Age</Label>
+                <Input
                     type='number'
                     id='age'
                     name='age'
@@ -89,8 +94,8 @@ function SignUp({ onLogin }) {
                     value={formik.values.age}
                     label="Age"
                 />
-                <label htmlFor='email'>Email</label>
-                <input
+                <Label htmlFor='email'>Email</Label>
+                <Input
                     type='email'
                     id='email'
                     name='email'
