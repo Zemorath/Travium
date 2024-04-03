@@ -10,8 +10,9 @@ function SelectProviders(props) {
             <Field as='select' id={name} name={name} {...rest}>
                 {
                     options.map((option, index) => {
+                        index=index+1
                         return (
-                            <option key={option.company} value={index + 1}>
+                            <option key={option.company} value={index}>
                                 {option.company}
                             </option>
                         )

@@ -169,6 +169,8 @@ class Subscriptions_Using(Resource):
             provider_price=data.get('provider_price'),
             description=data.get('description'),
             status=data.get('status'),
+            user_id=data.get('user_id'),
+            provider_id=data.get('provider_id'),
         )
         db.session.add(new_sub)
         db.session.commit()

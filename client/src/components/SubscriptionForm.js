@@ -25,6 +25,7 @@ function SubForm({ user }) {
         });
     }, []);
 
+    const id = user.id
 
     const handleSubmit = async (values) => {
         try {
@@ -35,7 +36,7 @@ function SubForm({ user }) {
                 },
                 body: JSON.stringify(values, null, 2)
             });
-
+            console.log(values)
             if (response.ok) {
                 console.log("Form submitted", values)
             } else {
@@ -51,21 +52,10 @@ function SubForm({ user }) {
         sub_price: 0,
         description: '',
         status: 'active',
-        user_id: {user},
+        user_id: id,
         provider_id: 0,
     }
 
-    // const formik = useFormik ({
-    //     // initialValues: {
-    //     //     type: '',
-    //     //     sub_price: 0,
-    //     //     description: '',
-    //     //     status: 'active',
-    //     //     user_id: {user},
-    //     //     provider_id: 0,
-    //     // },
-    //     onSubmit: handleSubmit
-    // })
 
     return (
         <Formik 
@@ -73,14 +63,6 @@ function SubForm({ user }) {
             onSubmit={handleSubmit}>
             <Form className="sub-form">
                 <h1>Add New Service</h1>
-                {/* <FieldContainer>
-                    <Label>Service:</Label>
-                    <select onChange={formik.handleChange} value={formik.values.type} placeholder="Select">
-                        {services.map((item, index) => (
-                            <option key={index} value={item}>{item.type}</option>
-                        ))}
-                    </select>
-                </FieldContainer> */}
                 <FieldContainer>
                     <FormikControl
                         control='selectServices'
@@ -91,13 +73,6 @@ function SubForm({ user }) {
                     <ErrorMessage name='type' />
                 </FieldContainer>
                 <FieldContainer>
-                    {/* <Label>Choose Provider:</Label> */}
-                    {/* <select onChange={handleChange} value={values.provider_id}>
-                        <option> SELECT </option>
-                        {providers.map((item, index) => (
-                            <option key={index} value={item.company}>{item.company}</option>
-                        ))}
-                    </select> */}
                     <FormikControl 
                         control='selectProviders'
                         label="Select a Provider"
@@ -124,6 +99,15 @@ function SubForm({ user }) {
                         className='description'
                     />
                     <ErrorMessage name='description' />
+                </FieldContainer>
+                <FieldContainer>
+                    <Label></Label>
+                    <Field 
+                        type='number'
+                        id='user_id'
+                        name='user_id'
+                        className='user_id'
+                    />
                 </FieldContainer>
                 <FieldContainer>
                     <button variant="fill" color="primary" type="submit">
