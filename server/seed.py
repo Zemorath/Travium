@@ -51,7 +51,6 @@ with app.app_context():
     for a in company:
         provider = Provider(
             company=a,
-            price=randint(20, 100.00)
         )
         providers.append(provider)
     db.session.add_all(providers)

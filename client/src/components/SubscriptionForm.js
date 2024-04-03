@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router"
 import { Formik, handleChange, Field, Form, ErrorMessage } from 'formik';
 import styled from "styled-components";
 import FormikControl from './FormikControl'
@@ -6,6 +7,8 @@ import "../styles/SubForm.css"
 
 
 function SubForm({ user }) {
+
+    const history = useHistory();
 
     const [providers, setProviders] = useState([])
     useEffect(() => {
@@ -39,6 +42,7 @@ function SubForm({ user }) {
             console.log(values)
             if (response.ok) {
                 console.log("Form submitted", values)
+                history.push('/services')
             } else {
                 console.error("An error occurred when submitting the form")
             }
@@ -49,11 +53,12 @@ function SubForm({ user }) {
 
     const intitialValues = {
         type: '',
-        sub_price: 0,
+        sub_price: 10,
         description: '',
         status: 'active',
         user_id: id,
         provider_id: 0,
+        provider_price: 0,
     }
 
 
@@ -82,13 +87,21 @@ function SubForm({ user }) {
                     <ErrorMessage name='provider_id' />
                 </FieldContainer>
                 <FieldContainer>
+                    <Field 
+                        type='number'
+                        id='sub_price'
+                        name='sub_price'
+                        className='user_id'
+                    />
+                </FieldContainer>
+                <FieldContainer>
                     <Label>Please enter how much your service typically costs: </Label>
                     <Field
                         type="number"
-                        id="sub_price"
-                        name="sub_price"
+                        id="provider_price"
+                        name="provider_price"
                     />
-                    <ErrorMessage name='sub_price' />
+                    <ErrorMessage name='provider_price' />
                 </FieldContainer>    
                 <FieldContainer>
                     <Label>Please write a brief description about your service: </Label>
@@ -99,15 +112,6 @@ function SubForm({ user }) {
                         className='description'
                     />
                     <ErrorMessage name='description' />
-                </FieldContainer>
-                <FieldContainer>
-                    <Label></Label>
-                    <Field 
-                        type='number'
-                        id='user_id'
-                        name='user_id'
-                        className='user_id'
-                    />
                 </FieldContainer>
                 <FieldContainer>
                     <button variant="fill" color="primary" type="submit">

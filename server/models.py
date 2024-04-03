@@ -77,7 +77,6 @@ class Provider(db.Model, SerializerMixin):
     serialize_rules = ('-subscriptions.provider',)
 
     id = db.Column(db.Integer, primary_key=True)
-    price = db.Column(db.Integer)
     company = db.Column(db.String)
 
     subscriptions = db.relationship('Subscription', back_populates='provider')

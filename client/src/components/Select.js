@@ -1,12 +1,14 @@
 import React from 'react'
 import { Field, ErrorMessage } from 'formik'
+import styled from "styled-components";
 
 
 function Select(props) {
     const { label, name, options, ...rest} = props
     return (
         <div className='form-control'>
-            <label htmlFor={name}>{label}</label>
+            <Label htmlFor={name}>{label}</Label>
+            <br />
             <Field as='select' id={name} name={name} {...rest}>
                 {
                     options.map(option => {
@@ -22,5 +24,12 @@ function Select(props) {
         </div>
     )
 }
+
+const Label = styled.label`
+    color: black;
+    font-size: 1rem;
+    font-weight: 700;
+    padding-top: 4%;
+`
 
 export default Select

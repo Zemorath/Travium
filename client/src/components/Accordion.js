@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const AccordionItem = ({ type, sub_price, provider_price, description, status, isOpen, onClick }) => {
+const AccordionItem = ({ type, sub_price, provider_price, description, status, provider, isOpen, onClick }) => {
     const contentHeight = useRef()
 
     return(
@@ -23,6 +23,8 @@ const AccordionItem = ({ type, sub_price, provider_price, description, status, i
                 }>
                     <p className="info-content">
                         {description}
+                        <hr />
+                        Provider: {provider}
                         <hr />
                         Price: {sub_price + provider_price}
                         <hr />
@@ -63,6 +65,7 @@ const Accordion = () => {
                         provider_price={item.provider_price} 
                         description={item.description} 
                         status={item.status}
+                        provider={item.provider.company}
                         isOpen={activeIndex === index}
                         onClick={() => handleItemClick(index)}
                     />    

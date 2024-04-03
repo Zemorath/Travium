@@ -207,6 +207,13 @@ class UserByID(Resource):
         else:
             return {"message": "User not signed in"}, 401
         
+# class ProviderByID(Resource):
+
+#     def get(self):
+
+#         provider = Provider.query.filter(Provider.id==provider_id).first().to_dict()
+#         return make_response(jsonify(provider), 200)
+        
 
 
 
