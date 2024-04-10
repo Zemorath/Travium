@@ -1,8 +1,19 @@
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
-from config import db, bcrypt
+from config import db, bcrypt, metadata
+from sqlalchemy import MetaData
 
+
+
+user_assigned_employees = db.Table(
+    'user_assigned_employees',
+    metadata,
+    db.Column('user_id', db.Integer, db.ForeignKey(
+        'users.id'), primary_key=True),
+    db.Column('employee_id', db.Integer, db.ForeignKey(
+        'employees.id'), primary_key=True)
+)
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
@@ -19,7 +30,10 @@ class User(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     subscriptions = db.relationship('Subscription', back_populates='user')
-    # provider = db.relationship('Provider', back_populates='user')
+    employees = db.relationship(
+        'Employee', secondary=user_assigned_employees, back_populates='users'
+    )
+    
 
     @validates('username')
     def validate_username(self, key, _name):
@@ -55,6 +69,10 @@ class Employee(db.Model, SerializerMixin):
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String)
     email = db.Column(db.String)
+
+    users = db.relationship(
+        'User', secondary=user_assigned_employees, back_populates='employees'
+    )
 
     def __repr__(self):
         return f'{self.id}: Employee: {self.username}'
@@ -103,7 +121,7 @@ class Provider(db.Model, SerializerMixin):
     company = db.Column(db.String)
 
     subscriptions = db.relationship('Subscription', back_populates='provider')
-    # user = db.relationship('User', back_populates='provider')
+    
 
     def __repr__(self):
         return f'Provder {self.company} located in {self.location} added.'

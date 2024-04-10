@@ -93,6 +93,7 @@ function SubForm({ user }) {
                         name='sub_price'
                         className='user_id'
                     />
+                    <ErrorMessage name='sub_price' />
                 </FieldContainer>
                 <FieldContainer>
                     <Label>Please enter how much your service typically costs: </Label>
