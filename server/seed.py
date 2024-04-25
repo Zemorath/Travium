@@ -15,6 +15,7 @@ with app.app_context():
     Employee.query.delete()
     Provider.query.delete()
     Available_Services.query.delete()
+    
 
     fake = Faker()
 

@@ -2,23 +2,12 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 from config import db, bcrypt, metadata
-from sqlalchemy import MetaData
 
-
-
-user_assigned_employees = db.Table(
-    'user_assigned_employees',
-    metadata,
-    db.Column('user_id', db.Integer, db.ForeignKey(
-        'users.id'), primary_key=True),
-    db.Column('employee_id', db.Integer, db.ForeignKey(
-        'employees.id'), primary_key=True)
-)
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-subscriptions.user', '-_password_hash',)
+    serialize_rules = ('-subscriptions.user', '-_password_hash')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -30,9 +19,8 @@ class User(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     subscriptions = db.relationship('Subscription', back_populates='user')
-    employees = db.relationship(
-        'Employee', secondary=user_assigned_employees, back_populates='users'
-    )
+    providers = db.relationship(
+        'Provider', secondary="subscriptions")
     
 
     @validates('username')
@@ -70,9 +58,6 @@ class Employee(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String)
     email = db.Column(db.String)
 
-    users = db.relationship(
-        'User', secondary=user_assigned_employees, back_populates='employees'
-    )
 
     def __repr__(self):
         return f'{self.id}: Employee: {self.username}'
@@ -81,7 +66,7 @@ class Employee(db.Model, SerializerMixin):
 class Subscription(db.Model, SerializerMixin):
     __tablename__= 'subscriptions'
 
-    serialize_rules = ('-user.subscriptions', '-provider.subscriptions',)
+    serialize_rules = ('-user.subscriptions', '-provider.subscriptions', '-user.providers')
 
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String)
