@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router"
-import { Formik, handleChange, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import styled from "styled-components";
 import FormikControl from './FormikControl'
 import "../styles/SubForm.css"

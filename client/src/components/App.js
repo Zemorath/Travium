@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Switch, Route, Navigate } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar";
-import LoginForm from "./LoginForm";
-import SignUpForm from "./SignUpForm";
+// import LoginForm from "./LoginForm";
+// import SignUpForm from "./SignUpForm";
 import Login from "../pages/Login";
 import SubscriptionPage from "../pages/SubscriptionPage";
 import Account from "../pages/Account";

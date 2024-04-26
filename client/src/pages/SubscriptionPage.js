@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import Accordion from '../components/Accordion';
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+// import { Link } from "react-router-dom";
+// import styled from "styled-components";
 
 function SubscriptionPage() {
     return (
