@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.d455ffe6.css",
+    "main.js": "/static/js/main.a5e729e3.js",
+    "static/media/Travium.png": "/static/media/Travium.239d14cf3e5a8cbb01fc.png",
+    "index.html": "/index.html",
+    "main.d455ffe6.css.map": "/static/css/main.d455ffe6.css.map",
+    "main.a5e729e3.js.map": "/static/js/main.a5e729e3.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d455ffe6.css",
+    "static/js/main.a5e729e3.js"
+  ]
+}

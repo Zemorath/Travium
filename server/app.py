@@ -1,9 +1,13 @@
-from flask import request, session, jsonify, make_response
+from flask import request, session, jsonify, make_response, render_template
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
+from dotenv import load_dotenv
+load_dotenv()
+
 from config import app, db, api
 from models import User, Subscription, Provider, Employee, Available_Services
+
 
 class UserSignup(Resource):
     
@@ -231,6 +235,9 @@ api.add_resource(Providers, '/providers', endpoint='providers')
 api.add_resource(UserByID, '/userinfo', endpoint='userinfo')
 api.add_resource(All_Available_Services, '/availableservices', endpoint='availableservices')
 
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("index.html")
 
 
 
