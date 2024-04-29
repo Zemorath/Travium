@@ -10,10 +10,10 @@ fake = Faker()
 with app.app_context():
 
     print("Deleting all records...")
-    Subscription.query.delete()
-    User.query.delete()
-    Employee.query.delete()
     Provider.query.delete()
+    User.query.delete()
+    Subscription.query.delete()
+    Employee.query.delete()
     Available_Services.query.delete()
     
 
