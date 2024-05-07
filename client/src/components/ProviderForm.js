@@ -8,8 +8,6 @@ function ProviderForm({ user }) {
 
     const history = useHistory();
 
-    const id = user.id
-
     const handleSubmit = async (values) => {
         try {
             const response = await fetch("/providers", {

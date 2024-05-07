@@ -8,6 +8,7 @@ import SubscriptionPage from "../pages/SubscriptionPage";
 import Account from "../pages/Account";
 import Home from "../pages/Home"
 import NewSubscription from "../pages/NewSubscription";
+import NewProvider from '../pages/NewProvider';
 
 function App() {
     const [user, setUser] = useState(null);
@@ -35,6 +36,9 @@ function App() {
                     </Route>
                     <Route path="/account">
                         <Account user={user}/>
+                    </Route>
+                    <Route path="/new/provider">
+                        <NewProvider user={user}/>
                     </Route>
                     <Route path="/">
                         <Home />

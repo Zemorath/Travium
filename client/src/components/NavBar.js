@@ -30,6 +30,9 @@ function NavBar({ user, setUser }) {
                     <li>
                         <Link to='/account' className="nav-link">Account</Link>
                     </li>
+                    <li>
+                        <Link to='/new/provider' className="nav-link">New Provider</Link>
+                    </li>
                     
                     <Button className="logout" variant="outline" onClick={handleLogoutClick}>
                         Logout
