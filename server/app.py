@@ -146,7 +146,6 @@ class Providers(Resource):
         data=request.get_json()
         new_provider = Provider(
             company=data.get('company'),
-            location=data.get('location'),
         )
         db.session.add(new_provider)
         db.session.commit()

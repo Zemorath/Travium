@@ -38,7 +38,7 @@ class User(db.Model, SerializerMixin):
     def password_hash(self, password):
         password_hash = bcrypt.generate_password_hash(
             password.encode('utf-8'))
-        self._passwrod_hash = password_hash.decode('utf-8')
+        self._password_hash = password_hash.decode('utf-8')
     
     def authenticate(self, password):
         return bcrypt.check_password_hash(
@@ -104,6 +104,7 @@ class Provider(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     company = db.Column(db.String)
+    state = db.Column(db.String)
 
     subscriptions = db.relationship('Subscription', back_populates='provider')
     

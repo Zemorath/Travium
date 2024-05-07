@@ -67,7 +67,7 @@ function SubForm({ user }) {
             initialValues={intitialValues}
             onSubmit={handleSubmit}>
             <Form className="sub-form">
-                <h1>Add New Service</h1>
+                <h1>Add New Subscription</h1>
                 <FieldContainer>
                     <FormikControl
                         control='selectServices'
