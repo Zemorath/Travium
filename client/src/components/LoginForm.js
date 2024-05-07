@@ -2,8 +2,9 @@ import React from "react";
 import Label from "../styles/Label"
 import Button from "../styles/Button"
 import FormField from "../styles/FormField"
-import Input from "../styles/Input"
+import "../styles/SubForm.css"
 import { useFormik } from 'formik'
+import * as Yup from 'yup'
 
 function LoginForm({ onLogin }) {
 
@@ -29,36 +30,46 @@ function LoginForm({ onLogin }) {
         }
     }
 
-    const formik = useFormik ({
-        initialValues: {
-            username: '',
-            password: '',
+    // const formik = useFormik ({
+    //     initialValues: {
+    //         username: '',
+    //         password: '',
             
-        },
-        isLoading: false,
-        onSubmit: handleSubmit
+    //     },
+    //     isLoading: false,
+    //     onSubmit: handleSubmit
+    // })
+
+    const initialValues = {
+        name: '',
+        password: ''
+    }
+
+    const validationSchema = Yup.object({
+        name: Yup.string().required('Required'),
+        password: Yup.string().required('Required'),
     })
 
     return (
-        <form onSubmit={formik.handleSubmit}>
+        <Formik onSubmit={handleSubmit}
+        initialValues={initialValues}
+        validationSchema={validationSchema}>
             <FormField>
                 <Label htmlFor='username'>Username</Label>
-                <Input
+                <Field
                     type="text"
-                    id='username'    
-                    autoComplete='off'
-                    value={formik.values.username}
-                    onChange={formik.handleChange}
+                    id='username' 
+                    name='username'   
+                    className='input'
                 />
             </FormField>
             <FormField>
                 <Label htmlFor='password'>Password</Label>
-                <Input
+                <Field
                     type='password'
                     id='password'
-                    autoComplete='current-password'
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
+                    name='password'
+                    className='input'
                 />
             </FormField>
             <FormField>
@@ -66,7 +77,7 @@ function LoginForm({ onLogin }) {
                     {formik.values.isLoading ? "Loading..." : "Login"}
                 </Button>
             </FormField>
-        </form>
+        </Formik>
     )
 }
 

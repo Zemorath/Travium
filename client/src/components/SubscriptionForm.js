@@ -4,6 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import styled from "styled-components";
 import FormikControl from './FormikControl'
 import "../styles/SubForm.css"
+import * as Yup from 'yup'
 
 
 function SubForm({ user }) {
@@ -61,11 +62,18 @@ function SubForm({ user }) {
         provider_price: 0,
     }
 
+    const validationSchema = Yup.object({
+        type: Yup.string().required('Required'),
+        description: Yup.string().required('Required'),
+        provider_price: Yup.string().required('Required')
+    })
+
 
     return (
         <Formik 
             initialValues={intitialValues}
-            onSubmit={handleSubmit}>
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}>
             <Form className="sub-form">
                 <h1>Add New Subscription</h1>
                 <FieldContainer>
