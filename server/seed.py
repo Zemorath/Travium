@@ -10,9 +10,9 @@ fake = Faker()
 with app.app_context():
 
     print("Deleting all records...")
+    Subscription.query.delete()
     Provider.query.delete()
     User.query.delete()
-    Subscription.query.delete()
     Employee.query.delete()
     Available_Services.query.delete()
     
@@ -49,11 +49,13 @@ with app.app_context():
     print("Creating providers...")
     providers = []
     company = ["HEB", "Walmart", "Spectrum", "Verizon", "AT&T", "Dish", "Walgreens"]
+    b = ['Texas', 'California']
     for a in company:
         provider = Provider(
             company=a,
+            state=rc(b),
         )
-        providers.append(provider)
+        providers.append(provider)    
     db.session.add_all(providers)
 
     print("Creating available services...")
