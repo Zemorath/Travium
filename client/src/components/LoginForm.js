@@ -3,7 +3,7 @@ import Label from "../styles/Label"
 import Button from "../styles/Button"
 import FormField from "../styles/FormField"
 import "../styles/SubForm.css"
-import { useFormik } from 'formik'
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup'
 
 function LoginForm({ onLogin }) {
@@ -30,15 +30,6 @@ function LoginForm({ onLogin }) {
         }
     }
 
-    // const formik = useFormik ({
-    //     initialValues: {
-    //         username: '',
-    //         password: '',
-            
-    //     },
-    //     isLoading: false,
-    //     onSubmit: handleSubmit
-    // })
 
     const initialValues = {
         name: '',
@@ -51,32 +42,37 @@ function LoginForm({ onLogin }) {
     })
 
     return (
-        <Formik onSubmit={handleSubmit}
-        initialValues={initialValues}
-        validationSchema={validationSchema}>
-            <FormField>
-                <Label htmlFor='username'>Username</Label>
-                <Field
-                    type="text"
-                    id='username' 
-                    name='username'   
-                    className='input'
-                />
-            </FormField>
-            <FormField>
-                <Label htmlFor='password'>Password</Label>
-                <Field
-                    type='password'
-                    id='password'
-                    name='password'
-                    className='input'
-                />
-            </FormField>
-            <FormField>
-                <Button variant="fill" color="primary" type="submit">
-                    {formik.values.isLoading ? "Loading..." : "Login"}
-                </Button>
-            </FormField>
+        <Formik 
+            onSubmit={handleSubmit}
+            initialValues={initialValues}
+            validationSchema={validationSchema}>
+            <Form>
+                <FieldContainer className="field-container">
+                    <Label htmlFor='username'>Username</Label>
+                    <Field
+                        type="text"
+                        id='username' 
+                        name='username'   
+                        className='input'
+                    />
+                    <ErrorMessage name='username' />
+                </FieldContainer>
+                <FieldContainer className="field-container">~
+                    <Label htmlFor='password'>Password</Label>
+                    <Field
+                        type='password'
+                        id='password'
+                        name='password'
+                        className='input'
+                    />
+                    <ErrorMessage name='password' />
+                </FieldContainer>
+                <FieldContainer className="field-container">
+                    <Button variant="fill" color="primary" type="submit">
+                        Login
+                    </Button>
+                </FieldContainer>
+            </Form>
         </Formik>
     )
 }
