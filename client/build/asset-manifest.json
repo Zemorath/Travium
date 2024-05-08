@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.2756487f.css",
-    "main.js": "/static/js/main.ffea31f8.js",
+    "main.css": "/static/css/main.eebacdeb.css",
+    "main.js": "/static/js/main.0053de48.js",
     "static/media/Travium.png": "/static/media/Travium.239d14cf3e5a8cbb01fc.png",
     "index.html": "/index.html",
-    "main.2756487f.css.map": "/static/css/main.2756487f.css.map",
-    "main.ffea31f8.js.map": "/static/js/main.ffea31f8.js.map"
+    "main.eebacdeb.css.map": "/static/css/main.eebacdeb.css.map",
+    "main.0053de48.js.map": "/static/js/main.0053de48.js.map"
   },
   "entrypoints": [
-    "static/css/main.2756487f.css",
-    "static/js/main.ffea31f8.js"
+    "static/css/main.eebacdeb.css",
+    "static/js/main.0053de48.js"
   ]
 }

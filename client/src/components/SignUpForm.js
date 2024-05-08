@@ -1,9 +1,8 @@
 import React from "react";
-import { useFormik } from 'formik';
 import Label from "../styles/Label"
-// import Button from "../styles/Button"
-// import FormField from "../styles/FormField"
-import Input from "../styles/Input"
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import styled from "styled-components";
+import * as Yup from 'yup'
 
 
 function SignUp({ onLogin }) {
@@ -31,85 +30,97 @@ function SignUp({ onLogin }) {
         }
     }
 
-    const formik = useFormik({
-        initialValues: {
-            username: '', 
-            password: '', 
-            first_name: '', 
-            last_name: '', 
-            age: '', 
-            email: '',
-        },
-        onSubmit: handleSubmit
+    const initialValues = {
+        username: '', 
+        password: '', 
+        first_name: '', 
+        last_name: '', 
+        age: '', 
+        email: ''
+    }
+        
+    const validationSchema = Yup.object({
+        username: Yup.string().required('Username Required'),
+        password: Yup.string().required('Password Required'),
+        first_name: Yup.string().required('First Name Required'),
+        last_name: Yup.string().required('Last Name Required'),
+        age: Yup.number().required('Age Required'),
+        email: Yup.string().email('Invalid email format').required('Email Required'),
     })
-
     
 
 
     return (
-        <div>
-            <form onSubmit={formik.handleSubmit}>
-                <Label htmlFor='username'>Username</Label>
-                <Input
-                    type='text'
-                    id='username'
-                    name='username'
-                    onChange={formik.handleChange}
-                    value={formik.values.username}
-                    label='Username'
-                />
-                <Label htmlFor='password'>Password</Label>
-                <Input
-                    type='password'
-                    id='password'
-                    name='password'
-                    onChange={formik.handleChange}
-                    value={formik.values.password}
-                    label="Password"
-                />
-                <Label htmlFor='first_name'>First Name</Label>
-                <Input
-                    type='text'
-                    id='first_name'
-                    name='first_name'
-                    onChange={formik.handleChange}
-                    value={formik.values.first_name}
-                    label='First Name'
-                />
-                <Label htmlFor='last_name'>Last Name</Label>
-                <Input
-                    type='text'
-                    id='last_name'
-                    name='last_name'
-                    onChange={formik.handleChange}
-                    value={formik.values.last_name}
-                    label='Last Name'
-                />
-                <Label htmlFor='age'>Age</Label>
-                <Input
-                    type='number'
-                    id='age'
-                    name='age'
-                    onChange={formik.handleChange}
-                    value={formik.values.age}
-                    label="Age"
-                />
-                <Label htmlFor='email'>Email</Label>
-                <Input
-                    type='email'
-                    id='email'
-                    name='email'
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                    label='Email'
-                />
+        <Formik
+            onSubmit={handleSubmit}
+            initialValues={initialValues}
+            validationSchema={validationSchema}>
+            <Form>
+                <FieldContainer>
+                    <Label htmlFor='username'>Username</Label>
+                    <Field
+                        type='text'
+                        id='username'
+                        name='username'
+                    />
+                    <ErrorMessage name='username' />
+                </FieldContainer>
+                <FieldContainer>
+                    <Label htmlFor='password'>Password</Label>
+                    <Field
+                        type='password'
+                        id='password'
+                        name='password'
+                    />
+                    <ErrorMessage name='password' />
+                </FieldContainer>
+                <FieldContainer>
+                    <Label htmlFor='first_name'>First Name</Label>
+                    <Field
+                        type='text'
+                        id='first_name'
+                        name='first_name'
+                    />
+                    <ErrorMessage name='first_name' />
+                </FieldContainer>    
+                <FieldContainer>
+                    <Label htmlFor='last_name'>Last Name</Label>
+                    <Field
+                        type='text'
+                        id='last_name'
+                        name='last_name'
+                    />
+                    <ErrorMessage name='last_name' />
+                </FieldContainer>
+                <FieldContainer>
+                    <Label htmlFor='age'>Age</Label>
+                    <Field
+                        type='number'
+                        id='age'
+                        name='age'
+                    />
+                    <ErrorMessage name='age' />
+                </FieldContainer>
+                <FieldContainer>
+                    <Label htmlFor='email'>Email</Label>
+                    <Field
+                        type='email'
+                        id='email'
+                        name='email'
+                    />
+                    <ErrorMessage name='email' />
+                </FieldContainer>    
                 <button type='submit'>
                     Submit
                 </button>
-            </form>
-        </div>
+            </Form>
+        </Formik>
     )
 }
+
+const FieldContainer = styled.div`
+    padding-top: 15px;
+`
 
 
 export default SignUp

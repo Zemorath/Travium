@@ -4,8 +4,16 @@ from faker import Faker
 
 from app import app
 from models import db, Subscription, User, Employee, Provider, Available_Services
+from sqlalchemy import text
 
 fake = Faker()
+
+def reset_sequence():
+    db.session.execute(text("ALTER SEQUENCE users_id_seq RESTART WITH 1"))
+    db.session.execute(text("ALTER SEQUENCE providers_id_seq RESTART WITH 1"))
+    db.session.execute(text("ALTER SEQUENCE subscriptions_id_seq RESTART WITH 1"))
+    db.session.execute(text("ALTER SEQUENCE available_services_id_seq RESTART WITH 1"))
+    db.session.commit()
 
 with app.app_context():
 
@@ -16,7 +24,7 @@ with app.app_context():
     Employee.query.delete()
     Available_Services.query.delete()
     
-
+    reset_sequence()
     fake = Faker()
 
     print("Creating users...")

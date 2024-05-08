@@ -3,6 +3,7 @@ import { useHistory } from "react-router"
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import styled from "styled-components";
 import "../styles/SubForm.css"
+import * as Yup from 'yup'
 
 function ProviderForm({ user }) {
 
@@ -34,11 +35,17 @@ function ProviderForm({ user }) {
         state: '',
     }
 
+    const validationSchema = Yup.object({
+        company: Yup.string().required('Please provide a company'),
+        state: Yup.string().required('Please provide a state')
+    })
+
 
     return (
         <Formik 
             initialValues={intitialValues}
-            onSubmit={handleSubmit}>
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}>
             <Form className="sub-form">
                 <h1>Add New Provider</h1>   
                 <FieldContainer>

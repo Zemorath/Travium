@@ -53,19 +53,20 @@ function SubForm({ user }) {
     }
 
     const intitialValues = {
-        type: '',
+        type: 'Pharmacy',
         sub_price: 10,
         description: '',
         status: 'active',
         user_id: id,
-        provider_id: 0,
-        provider_price: 0,
+        provider_id: 1,
+        provider_price: null,
     }
 
     const validationSchema = Yup.object({
-        type: Yup.string().required('Required'),
-        description: Yup.string().required('Required'),
-        provider_price: Yup.string().required('Required')
+        type: Yup.string().required('Service Type Required'),
+        description: Yup.string().required('Please give a brief description'),
+        provider_price: Yup.number().required('Price Required'),
+        provider_id: Yup.number().required('Provider Required')
     })
 
 

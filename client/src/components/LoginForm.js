@@ -1,9 +1,9 @@
 import React from "react";
 import Label from "../styles/Label"
 import Button from "../styles/Button"
-import FormField from "../styles/FormField"
 import "../styles/SubForm.css"
 import { Formik, Field, Form, ErrorMessage } from 'formik';
+import styled from "styled-components";
 import * as Yup from 'yup'
 
 function LoginForm({ onLogin }) {
@@ -32,13 +32,13 @@ function LoginForm({ onLogin }) {
 
 
     const initialValues = {
-        name: '',
+        username: '',
         password: ''
     }
 
     const validationSchema = Yup.object({
-        name: Yup.string().required('Required'),
-        password: Yup.string().required('Required'),
+        username: Yup.string().required('Username Required'),
+        password: Yup.string().required('Password Required'),
     })
 
     return (
@@ -47,7 +47,7 @@ function LoginForm({ onLogin }) {
             initialValues={initialValues}
             validationSchema={validationSchema}>
             <Form>
-                <FieldContainer className="field-container">
+                <FieldContainer>
                     <Label htmlFor='username'>Username</Label>
                     <Field
                         type="text"
@@ -57,7 +57,7 @@ function LoginForm({ onLogin }) {
                     />
                     <ErrorMessage name='username' />
                 </FieldContainer>
-                <FieldContainer className="field-container">~
+                <FieldContainer>
                     <Label htmlFor='password'>Password</Label>
                     <Field
                         type='password'
@@ -67,7 +67,7 @@ function LoginForm({ onLogin }) {
                     />
                     <ErrorMessage name='password' />
                 </FieldContainer>
-                <FieldContainer className="field-container">
+                <FieldContainer>
                     <Button variant="fill" color="primary" type="submit">
                         Login
                     </Button>
@@ -76,5 +76,9 @@ function LoginForm({ onLogin }) {
         </Formik>
     )
 }
+
+const FieldContainer = styled.div`
+    padding-top: 15px;
+`
 
 export default LoginForm
