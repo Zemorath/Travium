@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router"
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup'
 import Label from "../styles/Label"
@@ -11,8 +10,8 @@ import '../styles/AccountInfo.css'
 function Account({ user }) {
 
     const [showInput, setShowInput] = useState(false)
-    // const [currentUsername, setCurrentUsername] = useState(user.username)
-    const history = useHistory()
+    
+    
 
     const handleForm = async () => {
         setShowInput(!showInput)
@@ -32,16 +31,7 @@ function Account({ user }) {
         }
     }
 
-    // const handleUsernameUpdate = async (updatedUsername) => {
-
-    //     const response = await fetch('/userinfo', {
-    //         method: "PATCH",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify(updatedUsername),
-    //     })
-    // }
+   
 
     const handleSubmit = async (values) => {
         try {
