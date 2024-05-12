@@ -18,7 +18,7 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
-    subscriptions = db.relationship('Subscription', back_populates='user')
+    subscriptions = db.relationship('Subscription', back_populates='user', cascade='all, delete-orphan', passive_deletes=True)
     providers = db.relationship(
         'Provider', secondary="subscriptions")
     
@@ -76,7 +76,7 @@ class Subscription(db.Model, SerializerMixin):
     status = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'))
     user = db.relationship('User', back_populates='subscriptions')
 
     provider_id = db.Column(db.Integer, db.ForeignKey('providers.id'))

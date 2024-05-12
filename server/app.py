@@ -210,12 +210,41 @@ class UserByID(Resource):
         else:
             return {"message": "User not signed in"}, 401
         
-# class ProviderByID(Resource):
+    def delete(self):
+
+        if session['user_id']:
+            try:
+                user_id = session['user_id']
+                user = User.query.filter(User.id == user_id).first()
+
+                if user:
+                    db.session.delete(user)
+
+                    deleted_subscriptions = Subscription.query.filter_by(user_id = user_id).delete()
+                    db.session.commit()
+
+                    session['user_id'] = None
+                    return make_response({}, 204)
+                else:
+                    return {"error": "User not found"}, 404
+            except Exception as e:
+                db.session.rollback()
+                error_message = f"Error deleting user and subscriptions: {str(e)}"
+                app.logger.error(error_message)
+                return {"error": error_message}, 500
+        else:
+            return {"message": "User not signed in"}, 401
+    
+
+
+# class AllUsers(Resource):
 
 #     def get(self):
 
-#         provider = Provider.query.filter(Provider.id==provider_id).first().to_dict()
-#         return make_response(jsonify(provider), 200)
+#         users = [user.to_dict() for user in User.query.all()]
+#         return make_response(jsonify(users), 200)
+    
+# api.add_resource(AllUsers, '/users/all', endpoint='allusers')
         
 
 

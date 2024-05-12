@@ -1,47 +1,148 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router"
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup'
+import Label from "../styles/Label"
+import '../styles/AccountInfo.css'
+
 
 
 function Account({ user }) {
 
-    // const [user, setUser] = useState(null)
+    const [showInput, setShowInput] = useState(false)
+    // const [currentUsername, setCurrentUsername] = useState(user.username)
+    const history = useHistory()
 
-    // useEffect(() => {
-    //     fetch("/userinfo").then((r) => {
-    //         if (r.ok) {
-    //             r.json().then((user) => setUser(user));
-    //         }
-    //     });
-    // }, []);
+    const handleForm = async () => {
+        setShowInput(!showInput)
+    }
+
+    const handleDeleteClick = async () => {
+
+        const confirmDelete = window.confirm("Are you sure you want to delete your account?")
+        if (confirmDelete) {
+            const response = await fetch('/userinfo', {
+            method: "DELETE",
+        });
+            if (response.ok) {
+                alert("Account deleted successfully")
+                window.location.reload()
+            }
+        }
+    }
+
+    // const handleUsernameUpdate = async (updatedUsername) => {
+
+    //     const response = await fetch('/userinfo', {
+    //         method: "PATCH",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify(updatedUsername),
+    //     })
+    // }
+
+    const handleSubmit = async (values) => {
+        try {
+            const response = await fetch('/userinfo', {
+                method: 'PATCH',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values, null, 2),
+            });
+
+            if (response.ok) {
+                window.location.reload()
+            } else {
+                console.error("An error occurred while submitting the form.");
+            } 
+        } catch (error) {
+            console.error('An error occurred while submitting the form.', error)
+        }
+    }
+
+    const initialValues = {
+        username: '', 
+    }
+        
+    const validationSchema = Yup.object({
+        username: Yup.string()
+            .required('Username Required')
+            .test('is-unique', 'Username must be unique', function (value) {
+                // Check if the value is different from the current username
+                if (value !== user.username) {
+                    return true; // Username is unique
+                } else {
+                    return false; // Username is not unique
+                }
+            })
+    })
+
+
+    
 
     return (
         <>
             <Header>User Information</Header>
             <UserTemplate>
                 <InfoRow>
-                    <Field>Username:</Field>
-                    <Field>{user.username}</Field>
+                    <Info>Username:</Info>
+                    <Info>{user.username}</Info>
                 </InfoRow>
                 <InfoRow>
-                    <Field>First Name:</Field>
-                    <Field>{user.first_name}</Field>
+                    <Info>First Name:</Info>
+                    <Info>{user.first_name}</Info>
                 </InfoRow>
                 <InfoRow>
-                    <Field>Last Name:</Field>
-                    <Field>{user.last_name}</Field>
+                    <Info>Last Name:</Info>
+                    <Info>{user.last_name}</Info>
                 </InfoRow>
                 <InfoRow>
-                    <Field>Email:</Field>
-                    <Field>{user.email}</Field>
+                    <Info>Email:</Info>
+                    <Info>{user.email}</Info>
                 </InfoRow>
                 <InfoRow>
-                    <Field>Date Joined:</Field>
-                    <Field>{user.created_at}</Field>
+                    <Info>Date Joined:</Info>
+                    <Info>{user.created_at}</Info>
                 </InfoRow>
             </UserTemplate>
-            </>
+            <div className = 'button-container'>
+                <button onClick={handleForm} className = 'change-username-btn'>Change Username</button>
+                {showInput && (
+                    <div className = "form-container">
+                        <Formik
+                            onSubmit={handleSubmit}
+                            initialValues={initialValues}
+                            validationSchema={validationSchema}
+                        >
+                            <Form>
+                                <FieldContainer>
+                                    <Label htmlFor='username'>Enter New Username</Label>
+                                    <Field
+                                        type='text'
+                                        id='username'
+                                        name='username'
+                                    />
+                                    <ErrorMessage name='username' />
+                                </FieldContainer>
+                                <button type='submit'>Submit</button>
+                            </Form>      
+                        </Formik>
+                        <button onClick={handleForm} className='back-btn'>Back</button>
+                    </div>
+                )}
+                
+                <button onClick={handleDeleteClick} className = 'delete-account-btn'>Delete Account</button>
+            </div>    
+         </>
     )
 }
+
+const FieldContainer = styled.div`
+    padding-top: 15px;
+`
 
 const UserTemplate = styled.table`
     width: 30%;
@@ -61,7 +162,7 @@ const InfoRow = styled.tr`
     }
 `
 
-const Field = styled.td`
+const Info = styled.td`
     border: 1px solid black;
 `
 
