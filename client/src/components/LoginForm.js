@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Label from "../styles/Label"
 import Button from "../styles/Button"
 import "../styles/SubForm.css"
@@ -8,6 +8,7 @@ import * as Yup from 'yup'
 
 function LoginForm({ onLogin }) {
 
+    const [showError, setShowError] = useState(false)
 
     const handleSubmit = async (values) => {
         try {
@@ -24,6 +25,7 @@ function LoginForm({ onLogin }) {
                 response.json().then((user) => onLogin(user))
             } else {
                 console.error("An error occurred while submitting the form.");
+                setShowError(true)
             } 
         } catch (error) {
             console.error('An error occurred while submitting the form.', error)
@@ -67,6 +69,7 @@ function LoginForm({ onLogin }) {
                     />
                     <ErrorMessage name='password' />
                 </FieldContainer>
+                {showError && (<ErrorText>Username does not exist</ErrorText>)}
                 <FieldContainer>
                     <Button variant="fill" color="primary" type="submit">
                         Login
@@ -79,6 +82,10 @@ function LoginForm({ onLogin }) {
 
 const FieldContainer = styled.div`
     padding-top: 15px;
+`
+const ErrorText = styled.p`
+    color: red;
+    margin-top: 5px;
 `
 
 export default LoginForm

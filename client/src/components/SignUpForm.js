@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Label from "../styles/Label"
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import styled from "styled-components";
@@ -7,6 +7,7 @@ import * as Yup from 'yup'
 
 function SignUp({ onLogin }) {
 
+    const [errorMessage, setErrorMessage] = useState(false)
 
     const handleSubmit = async (values) => {
         console.log(JSON.stringify(values, null, 2))
@@ -23,8 +24,8 @@ function SignUp({ onLogin }) {
                 console.log("Form submitted", values);
                 response.json().then((user) => onLogin(user))
             } else {
-                console.error("An error occurred while submitting the form.");
-            } 
+                setErrorMessage(true);
+            }
         } catch (error) {
             console.error('An error occurred while submitting the form.', error)
         }
@@ -48,7 +49,7 @@ function SignUp({ onLogin }) {
         email: Yup.string().email('Invalid email format').required('Email Required'),
     })
     
-
+    console.log('Error Message:', errorMessage);
 
     return (
         <Formik
@@ -109,7 +110,8 @@ function SignUp({ onLogin }) {
                         name='email'
                     />
                     <ErrorMessage name='email' />
-                </FieldContainer>    
+                </FieldContainer>   
+                {errorMessage && (<ErrorText>Username or Email is already in use</ErrorText>)} 
                 <button type='submit'>
                     Submit
                 </button>
@@ -120,6 +122,11 @@ function SignUp({ onLogin }) {
 
 const FieldContainer = styled.div`
     padding-top: 15px;
+`
+
+const ErrorText = styled.p`
+    color: red;
+    margin-top: 5px;
 `
 
 
