@@ -237,14 +237,14 @@ class UserByID(Resource):
     
 
 
-# class AllUsers(Resource):
+class AllUsers(Resource):
 
-#     def get(self):
+    def get(self):
 
-#         users = [user.to_dict() for user in User.query.all()]
-#         return make_response(jsonify(users), 200)
+        users = [user.to_dict() for user in User.query.all()]
+        return make_response(jsonify(users), 200)
     
-# api.add_resource(AllUsers, '/users/all', endpoint='allusers')
+api.add_resource(AllUsers, '/users/all', endpoint='allusers')
         
 
 
