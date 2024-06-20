@@ -110,6 +110,16 @@ class UserCheckSession(Resource):
         else:
             return {"message": "Unauthorized log in"}, 401
         
+class EmpCheckSession(Resource):
+
+    def get(self):
+        emp_id = session['emp_id']
+        if emp_id:
+            emp = Employee.query.filter(Employee.id == emp_id).first()
+            return emp.to_dict(), 200
+        else:
+            return {"message": "Unauthorized log in"}, 401
+        
 
 class EmployeeCheckSession(Resource):
 
@@ -256,12 +266,12 @@ api.add_resource(UserLogin, '/userlogin', endpoint='userlogin')
 api.add_resource(UserLogout, '/userlogout', endpoint='userlogout')
 api.add_resource(EmployeeLogin, '/employeelogin', endpoint='employeelogin')
 api.add_resource(UserCheckSession, '/userchecksession', endpoint='userchecksession')
-api.add_resource(EmployeeCheckSession, '/employeechecksession', endpoint='employeechecksession')
 api.add_resource(Subscriptions_All, '/subscriptionsall', endpoint='subscriptionsall')
 api.add_resource(Subscriptions_Using, '/subscriptionsusing', endpoint='subscriptionsusing')
 api.add_resource(Providers, '/providers', endpoint='providers')
 api.add_resource(UserByID, '/userinfo', endpoint='userinfo')
 api.add_resource(All_Available_Services, '/availableservices', endpoint='availableservices')
+api.add_resource(EmpCheckSession, '/employee/session', endpoint='employeesession')
 
 @app.errorhandler(404)
 def not_found(e):

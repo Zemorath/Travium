@@ -12,14 +12,29 @@ import NewProvider from '../pages/NewProvider';
 
 function App() {
     const [user, setUser] = useState(null);
+    // const [emp, setEmp] = useState(null);
 
     useEffect(() => {
         fetch("/userchecksession").then((r) => {
             if (r.ok) {
                 r.json().then((user) => setUser(user));
+            } else {
+                fetch('/employee/session').then((a) => {
+                    if (a.ok) {
+                        a.json().then((user) => setUser(user))
+                    }
+                })
             }
         });
     }, []);
+
+    // useEffect(() => {
+    //     fetch("/employee/session").then((r) => {
+    //         if (r.ok) {
+    //             r.json().then((emp) => setEmp(emp));
+    //         }
+    //     })
+    // }, [])
 
     if (!user) return <Login onLogin={setUser} />;
 
