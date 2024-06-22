@@ -4,16 +4,18 @@ import SignUp from "../components/SignUpForm";
 import Button from "../styles/Button";
 import styled from "styled-components";
 import EmpLoginForm from "../components/EmpLogin";
+import EmpSignUp from "../components/EmpSignup";
 
 function Login({ onLogin }) {
     const [showLogin, setShowLogin] = useState(true);
-    const [empLogin, setEmpLogin] = useState(false);
+    const [empLogin, setEmpLogin] = useState(true);
+    const [empForm, setEmpForm] = useState(true);
 
     return (
         <Wrapper>
-            <Logo>Travium</Logo>
             {empLogin ? (
                 <>
+                    <Logo>Travium</Logo>
                     {showLogin ? (
                         <>
                             <LoginForm onLogin={onLogin} />
@@ -26,7 +28,7 @@ function Login({ onLogin }) {
                             </p>
                             <p>
                                 Looking for the Employee page?
-                                <Button color = "secondary" onClick={() => setEmpLogin(true)}>
+                                <Button color = "secondary" onClick={() => setEmpLogin(false)}>
                                     Click Here
                                 </Button>
                             </p>
@@ -46,13 +48,38 @@ function Login({ onLogin }) {
                 </>
             ) : (
                 <>
-                    <EmpLoginForm />
-                    <p>
-                        Not an employee?
-                        <Button color="secondary" onClick={() => setEmpLogin(false)}>
-                            Click Here
-                        </Button>
-                    </p>
+                    {empForm ? (
+                        <>
+                            <Logo>Travium Employee</Logo>
+                            <EmpLoginForm />
+                            <Divider />
+                            <p>
+                                Don't have an account?
+                                <Button color="secondary" onClick={() => setEmpForm(false)}>
+                                    Sign Up
+                                </Button>
+                            </p>
+                            <p>
+                                Not an employee?
+                                <Button color="secondary" onClick={() => setEmpLogin(true)}>
+                                    Click Here
+                                </Button>
+                            </p>
+                        </>
+                    ) : (
+                        <>
+                            <Logo>Travium Employee</Logo>
+                            <EmpSignUp onLogin={onLogin} />
+                            <Divider />
+                            <p>
+                                Already have an account?
+                                <Button color="secondary" onClick={() => setEmpForm(true)}>
+                                    Log In
+                                </Button>
+                            </p>
+                        </>
+                    )}
+                    
                 </>
             )}
         </Wrapper>
