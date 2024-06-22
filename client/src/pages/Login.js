@@ -47,6 +47,12 @@ function Login({ onLogin }) {
             ) : (
                 <>
                     <EmpLoginForm />
+                    <p>
+                        Not an employee?
+                        <Button color="secondary" onClick={() => setEmpLogin(false)}>
+                            Click Here
+                        </Button>
+                    </p>
                 </>
             )}
         </Wrapper>
