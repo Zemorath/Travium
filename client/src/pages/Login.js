@@ -51,7 +51,7 @@ function Login({ onLogin }) {
                     {empForm ? (
                         <>
                             <Logo>Travium Employee</Logo>
-                            <EmpLoginForm />
+                            <EmpLoginForm onLogin={onLogin}/>
                             <Divider />
                             <p>
                                 Don't have an account?
