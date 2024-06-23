@@ -27,6 +27,45 @@ with app.app_context():
     reset_sequence()
     fake = Faker()
 
+    # print("Creating users...")
+
+    # users = []
+    # usernames = []
+
+    # for n in range(20):
+
+    #     username = fake.first_name()
+    #     while username in usernames:
+    #         username = fake.first_name()
+    #     usernames.append(username)
+
+    #     user = User(
+    #         username=username,
+    #         first_name=fake.first_name(),
+    #         last_name=fake.last_name(),
+    #         age=randint(55, 105),
+    #         email=fake.email(),
+    #     )
+
+    #     user._password_hash = user.username + 'password'
+
+    #     users.append(user)
+
+    # db.session.add_all(users)
+
+
+    print("Creating providers...")
+    providers = []
+    company = ["HEB", "Walmart", "Spectrum", "Verizon", "AT&T", "Dish", "Walgreens"]
+    b = ['Texas', 'California']
+    for a in company:
+        provider = Provider(
+            company=a,
+            state=rc(b),
+        )
+        providers.append(provider)    
+    db.session.add_all(providers)
+
     print("Creating users...")
 
     users = []
@@ -53,19 +92,6 @@ with app.app_context():
 
     db.session.add_all(users)
 
-
-    print("Creating providers...")
-    providers = []
-    company = ["HEB", "Walmart", "Spectrum", "Verizon", "AT&T", "Dish", "Walgreens"]
-    b = ['Texas', 'California']
-    for a in company:
-        provider = Provider(
-            company=a,
-            state=rc(b),
-        )
-        providers.append(provider)    
-    db.session.add_all(providers)
-
     print("Creating available services...")
     available_services = []
     services = ["Pharmacy", "Phone", "Internet", "Groceries", "Hair", "Cable"]
@@ -76,6 +102,8 @@ with app.app_context():
 
         available_services.append(service)
     db.session.add_all(available_services)
+
+
 
     print("Creating subscriptions...")
     subscriptions = []
