@@ -19,8 +19,8 @@ class User(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     subscriptions = db.relationship('Subscription', back_populates='user', cascade='all, delete-orphan', passive_deletes=True)
-    providers = db.relationship(
-        'Provider', secondary="Subscriptions")
+    # providers = db.relationship(
+    #     'Provider', secondary="subscriptions")
     
 
     @validates('username')
