@@ -20,7 +20,7 @@ class User(db.Model, SerializerMixin):
 
     subscriptions = db.relationship('Subscription', back_populates='user', cascade='all, delete-orphan', passive_deletes=True)
     providers = db.relationship(
-        'Provider', secondary="subscriptions")
+        'Provider', secondary="Subscriptions")
     
 
     @validates('username')
