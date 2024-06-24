@@ -5,37 +5,33 @@ import "../styles/SubForm.css"
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import styled from "styled-components";
 import * as Yup from 'yup'
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../redux/user/userActions'
 
-function LoginForm() {
+function LoginForm({ onLogin }) {
 
-    // const [showError, setShowError] = useState(false)
+    const [showError, setShowError] = useState(false)
 
-    // const handleSubmit = async (values) => {
-    //     try {
-    //         const response = await fetch('/userlogin', {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify(values, null, 2)
-    //         });
+    const handleSubmit = async (values) => {
+        try {
+            const response = await fetch('/userlogin', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values, null, 2)
+            });
 
-    //         if (response.ok) {
-    //             console.log("Form submitted", values);
-    //             response.json().then((user) => onLogin(user))
-    //         } else {
-    //             console.error("An error occurred while submitting the form.");
-    //             setShowError(true)
-    //         } 
-    //     } catch (error) {
-    //         console.error('An error occurred while submitting the form.', error)
-    //     }
-    // }
+            if (response.ok) {
+                console.log("Form submitted", values);
+                response.json().then((user) => onLogin(user))
+            } else {
+                console.error("An error occurred while submitting the form.");
+                setShowError(true)
+            } 
+        } catch (error) {
+            console.error('An error occurred while submitting the form.', error)
+        }
+    }
 
-    const dispatch = useDispatch();
-    const { loading, error } = useSelector((state) => state.user);
 
     const initialValues = {
         username: '',
@@ -46,11 +42,6 @@ function LoginForm() {
         username: Yup.string().required('Username Required'),
         password: Yup.string().required('Password Required'),
     })
-
-    const handleSubmit = (values, { setSubmitting }) => {
-        dispatch(loginUser(values));
-        setSubmitting(false)
-    }
 
     return (
         <Formik 
@@ -78,10 +69,10 @@ function LoginForm() {
                     />
                     <ErrorMessage name='password' />
                 </FieldContainer>
-                {error && (<ErrorText>{error}</ErrorText>)}
+                {showError && (<ErrorText>Username does not exist</ErrorText>)}
                 <FieldContainer>
-                    <Button variant="fill" color="primary" type="submit" disabled={isSubmitting || loading}>
-                        {isSubmitting ? 'Logging in...' : 'Login'}
+                    <Button variant="fill" color="primary" type="submit">
+                        Login
                     </Button>
                 </FieldContainer>
             </Form>
