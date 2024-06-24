@@ -1,26 +1,41 @@
+import axios from 'axios'
+
 import {
-    FETCH_USERS_REQUEST,
-    FETCH_USERS_SUCCESS,
-    FETCH_USERS_FAILURE
+    LOGIN_REQUEST,
+    LOGIN_SUCCESS,
+    LOGIN_FAILURE
 } from './userTypes'
 
 
-export const fetchUsersRequest = () => {
+export const loginRequest = () => {
     return {
-        type: FETCH_USERS_REQUEST
+        type: LOGIN_REQUEST
     }
 }
 
-const fetchUsersSuccess = user => {
+export const loginSuccess = user => {
     return {
-        type: FETCH_USERS_SUCCESS,
+        type: LOGIN_SUCCESS,
         payload: user
     }
 }
 
-const fetchUsersFailure = error => {
+export const loginFailure = error => {
     return {
-        type: FETCH_USERS_FAILURE,
+        type: LOGIN_FAILURE,
         payload: error
     }
 }
+
+export const loginUser = (credentials) => {
+    return async (dispatch) => {
+        dispatch(loginRequest());
+        try {
+            const response = await axios.post('/userlogin', credentials);
+            dispatch(loginSuccess(response.data));
+        } catch (error) {
+            dispatch(loginFailure(error.message))
+        }
+    }
+}
+
