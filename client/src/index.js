@@ -4,6 +4,7 @@ import App from "./components/App";
 import { BrowserRouter } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 
+
 const GlobalStyle = createGlobalStyle`
     *,
     *::before,
@@ -20,10 +21,18 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
+const container = document.getElementById('root');
+if (!container) {
+    throw new Error("Root container element not found.")
+}
+
+
+
+
 ReactDOM.render(
     <BrowserRouter>
         <GlobalStyle />
         <App />
     </BrowserRouter>,
-    document.getElementById("root")
+    container
 );
