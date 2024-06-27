@@ -81,14 +81,14 @@ function LoginForm({ onLogin }) {
                     />
                     <ErrorMessage name='password' />
                 </FieldContainer>
-                {showError && (<ErrorText>Username does not exist</ErrorText>)}
+                {/* {showError && (<ErrorText>Username does not exist</ErrorText>)} */}
                 <FieldContainer>
                     <Button variant="fill" color="primary" type="submit">
                         {loading?'Loading...':'Login'}
                     </Button>
                 </FieldContainer>
                 {error&&(
-                    <div className='alert alert-danger' role='alert'>{error}</div>
+                    <ErrorText>{error}</ErrorText>
                 )}
             </Form>
         </Formik>
