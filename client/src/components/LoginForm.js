@@ -5,31 +5,43 @@ import "../styles/SubForm.css"
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import styled from "styled-components";
 import * as Yup from 'yup'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginUser } from '../redux/UserSlice'
 
 function LoginForm({ onLogin }) {
 
     const [showError, setShowError] = useState(false)
 
-    const handleSubmit = async (values) => {
-        try {
-            const response = await fetch('/userlogin', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(values, null, 2)
-            });
+    // const handleSubmit = async (values) => {
+    //     try {
+    //         const response = await fetch('/userlogin', {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(values, null, 2)
+    //         });
 
-            if (response.ok) {
-                console.log("Form submitted", values);
-                response.json().then((user) => onLogin(user))
-            } else {
-                console.error("An error occurred while submitting the form.");
-                setShowError(true)
-            } 
-        } catch (error) {
-            console.error('An error occurred while submitting the form.', error)
-        }
+    //         if (response.ok) {
+    //             console.log("Form submitted", values);
+    //             response.json().then((user) => onLogin(user))
+    //         } else {
+    //             console.error("An error occurred while submitting the form.");
+    //             setShowError(true)
+    //         } 
+    //     } catch (error) {
+    //         console.error('An error occurred while submitting the form.', error)
+    //     }
+    // }
+    const {loading, error} = useSelector((state)=>state.user);
+    const dispatch = useDispatch();
+
+    const handleSubmit=()=> {
+        dispatch(loginUser(initialValues)).then((result)=>{
+            if(result.payload){
+                onLogin(result.payload)
+            }
+        })
     }
 
 
@@ -72,9 +84,12 @@ function LoginForm({ onLogin }) {
                 {showError && (<ErrorText>Username does not exist</ErrorText>)}
                 <FieldContainer>
                     <Button variant="fill" color="primary" type="submit">
-                        Login
+                        {loading?'Loading...':'Login'}
                     </Button>
                 </FieldContainer>
+                {error&&(
+                    <div className='alert alert-danger' role='alert'>{error}</div>
+                )}
             </Form>
         </Formik>
     )
