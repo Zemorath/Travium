@@ -8,9 +8,9 @@ import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../redux/UserSlice'
 
-function LoginForm() {
+function LoginForm({ onLogin }) {
     const dispatch = useDispatch();
-    const [showError, setShowError] = useState(false)
+    // const [showError, setShowError] = useState(false)
     const user = useSelector((state) => state.user.user)
     const error = useSelector((state) => state.user.error)
 
@@ -50,7 +50,12 @@ function LoginForm() {
 
     const handleSubmit = async (values) => {
         dispatch(loginUser(values))
+        .then(onLogin(user))
     }
+
+    // if (user) {
+    //     return <Redirect to="/" />
+    // }
 
     return (
         <Formik 
@@ -78,7 +83,7 @@ function LoginForm() {
                     />
                     <ErrorMessage name='password' />
                 </FieldContainer>
-                {showError && (<ErrorText>Username does not exist</ErrorText>)}
+                {error && (<ErrorText>{error}</ErrorText>)}
                 <FieldContainer>
                     <Button variant="fill" color="primary" type="submit">
                         Login
