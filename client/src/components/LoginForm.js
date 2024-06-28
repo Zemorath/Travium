@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Label from "../styles/Label"
 import Button from "../styles/Button"
 import "../styles/SubForm.css"
@@ -8,9 +8,11 @@ import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../redux/UserSlice'
 
-function LoginForm({ onLogin }) {
-
-    // const [showError, setShowError] = useState(false)
+function LoginForm() {
+    const dispatch = useDispatch();
+    const [showError, setShowError] = useState(false)
+    const user = useSelector((state) => state.user.user)
+    const error = useSelector((state) => state.user.error)
 
     // const handleSubmit = async (values) => {
     //     try {
@@ -33,16 +35,7 @@ function LoginForm({ onLogin }) {
     //         console.error('An error occurred while submitting the form.', error)
     //     }
     // }
-    const {loading, error} = useSelector((state)=>state.user);
-    const dispatch = useDispatch();
-
-    const handleSubmit=()=> {
-        dispatch(loginUser(initialValues)).then((result)=>{
-            if(result.payload){
-                onLogin(result.payload)
-            }
-        })
-    }
+    
 
 
     const initialValues = {
@@ -54,6 +47,10 @@ function LoginForm({ onLogin }) {
         username: Yup.string().required('Username Required'),
         password: Yup.string().required('Password Required'),
     })
+
+    const handleSubmit = async (values) => {
+        dispatch(loginUser(values))
+    }
 
     return (
         <Formik 
@@ -81,15 +78,12 @@ function LoginForm({ onLogin }) {
                     />
                     <ErrorMessage name='password' />
                 </FieldContainer>
-                {/* {showError && (<ErrorText>Username does not exist</ErrorText>)} */}
+                {showError && (<ErrorText>Username does not exist</ErrorText>)}
                 <FieldContainer>
                     <Button variant="fill" color="primary" type="submit">
-                        {loading?'Loading...':'Login'}
+                        Login
                     </Button>
                 </FieldContainer>
-                {error&&(
-                    <ErrorText>{error}</ErrorText>
-                )}
             </Form>
         </Formik>
     )
