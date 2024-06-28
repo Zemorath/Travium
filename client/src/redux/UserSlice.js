@@ -66,7 +66,7 @@ export default userSlice.reducer;
 
 export const loginUser = (userData) => async (dispatch) => {
     try {
-        const response = await fetch ('userlogin', {
+        const response = await fetch ('/userlogin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -84,3 +84,25 @@ export const loginUser = (userData) => async (dispatch) => {
         dispatch(loginUserFailure(error.message))
     }
 }
+
+// const handleSubmit = async (values) => {
+    //     try {
+    //         const response = await fetch('/userlogin', {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(values, null, 2)
+    //         });
+
+    //         if (response.ok) {
+    //             console.log("Form submitted", values);
+    //             response.json().then((user) => onLogin(user))
+    //         } else {
+    //             console.error("An error occurred while submitting the form.");
+    //             setShowError(true)
+    //         } 
+    //     } catch (error) {
+    //         console.error('An error occurred while submitting the form.', error)
+    //     }
+    // }
