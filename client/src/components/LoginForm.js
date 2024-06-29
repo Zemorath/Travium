@@ -8,10 +8,10 @@ import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../redux/UserSlice'
 
-function LoginForm({ onLogin }) {
+function LoginForm() {
     const dispatch = useDispatch();
     // const [showError, setShowError] = useState(false)
-    const user = useSelector((state) => state.user.user)
+    // const user = useSelector((state) => state.user.user)
     const error = useSelector((state) => state.user.error)
 
     // const handleSubmit = async (values) => {
@@ -50,7 +50,6 @@ function LoginForm({ onLogin }) {
 
     const handleSubmit = async (values) => {
         dispatch(loginUser(values))
-        .then(onLogin(user))
     }
 
     // if (user) {

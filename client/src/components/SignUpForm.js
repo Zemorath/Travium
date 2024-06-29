@@ -1,34 +1,42 @@
-import React, { useState } from "react";
+import React from "react";
 import Label from "../styles/Label"
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import styled from "styled-components";
 import * as Yup from 'yup'
+import { useDispatch, useSelector } from 'react-redux'
+import { signupUser} from '../redux/UserSlice'
 
 
-function SignUp({ onLogin }) {
+function SignUp() {
 
-    const [errorMessage, setErrorMessage] = useState(false)
+    // const [errorMessage, setErrorMessage] = useState(false)
+    const dispatch = useDispatch()
+    const error = useSelector((state) => state.user.error)
+
+    // const handleSubmit = async (values) => {
+    //     console.log(JSON.stringify(values, null, 2))
+    //     try {
+    //         const response = await fetch('/usersignup', {
+    //             method: 'POST',
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(values, null, 2),
+    //         });
+
+    //         if (response.ok) {
+    //             console.log("Form submitted", values);
+    //             response.json().then((user) => onLogin(user))
+    //         } else {
+    //             setErrorMessage(true);
+    //         }
+    //     } catch (error) {
+    //         console.error('An error occurred while submitting the form.', error)
+    //     }
+    // }
 
     const handleSubmit = async (values) => {
-        console.log(JSON.stringify(values, null, 2))
-        try {
-            const response = await fetch('/usersignup', {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(values, null, 2),
-            });
-
-            if (response.ok) {
-                console.log("Form submitted", values);
-                response.json().then((user) => onLogin(user))
-            } else {
-                setErrorMessage(true);
-            }
-        } catch (error) {
-            console.error('An error occurred while submitting the form.', error)
-        }
+        dispatch(signupUser(values));
     }
 
     const initialValues = {
@@ -49,7 +57,6 @@ function SignUp({ onLogin }) {
         email: Yup.string().email('Invalid email format').required('Email Required'),
     })
     
-    console.log('Error Message:', errorMessage);
 
     return (
         <Formik
@@ -111,7 +118,7 @@ function SignUp({ onLogin }) {
                     />
                     <ErrorMessage name='email' />
                 </FieldContainer>   
-                {errorMessage && (<ErrorText>Username or Email is already in use</ErrorText>)} 
+                {error && (<ErrorText>{error}</ErrorText>)}
                 <button type='submit'>
                     Submit
                 </button>
