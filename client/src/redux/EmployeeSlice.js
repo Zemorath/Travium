@@ -5,17 +5,20 @@ const employeeSlice = createSlice({
     initialState: {
         employee: null,
         error: null,
+        isLoggedIn: false,
     },
     reducers: {
         setEmployee: (state, action) => {
             state.employee = action.payload;
             state.error = null;
+            state.isLoggedIn = true
         },
         setError: (state, action) => {
             state.error = action.payload;
         },
         clearEmployee: (state) => {
             state.employee = null;
+            state.isLoggedIn = false
         }
     },
 });

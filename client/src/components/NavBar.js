@@ -4,7 +4,7 @@ import '../styles/NavBar.css';
 import Button from "../styles/Button";
 import logo from '../assets/Travium.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../redux/UserSlice'; // Adjusted for UserSlice
+import { clearUser } from '../redux/UserSlice'; // Adjusted for UserSlice
 import { clearEmployee } from '../redux/EmployeeSlice'; // Adjusted for EmployeeSlice
 
 function NavBar() {
@@ -16,7 +16,7 @@ function NavBar() {
         if (user.isLoggedIn) {
             fetch("/userlogout", { method: 'DELETE' }).then((r) => {
                 if (r.ok) {
-                    dispatch(setUser(null));
+                    dispatch(clearUser());
                 }
             });
         } else if (employee.isLoggedIn) {
