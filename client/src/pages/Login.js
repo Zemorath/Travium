@@ -6,7 +6,7 @@ import EmpSignUp from '../components/EmpSignup';
 import Button from '../styles/Button';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { loginEmployee } from '../redux/EmployeesSlice'; 
+import { loginEmployee } from '../redux/EmployeeSlice'; 
 
 function Login({ onLogin }) {
   const [showLogin, setShowLogin] = useState(true);
