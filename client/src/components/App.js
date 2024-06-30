@@ -17,6 +17,7 @@ function App() {
     
     const dispatch = useDispatch()
     const user = useSelector(state => state.user.user)
+    const employee = useSelector(state => state.employee.employee)
     const history = useHistory()
 
     useEffect(() => {
@@ -51,7 +52,7 @@ function App() {
         checkSession();
     }, [dispatch, history]);
 
-    if (!user) return <Login path='/login'/>;
+    if (!user && !employee) return <Login path='/login'/>;
 
     return (
         <>
