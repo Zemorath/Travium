@@ -4,22 +4,22 @@ import '../styles/NavBar.css';
 import Button from "../styles/Button";
 import logo from '../assets/Travium.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearUser } from '../redux/UserSlice'; // Adjusted for UserSlice
-import { clearEmployee } from '../redux/EmployeeSlice'; // Adjusted for EmployeeSlice
+import { clearUser, selectUserState } from '../redux/UserSlice'; // Adjusted for UserSlice
+import { clearEmployee, selectEmployeeState } from '../redux/EmployeeSlice'; // Adjusted for EmployeeSlice
 
 function NavBar() {
     const dispatch = useDispatch();
-    const user = useSelector(state => state.user.user); // Selecting user state from UserSlice
-    const employee = useSelector(state => state.employee.employee); // Selecting employee state from EmployeeSlice
+    const user = useSelector(selectUserState); // Selecting user state from UserSlice
+    const employee = useSelector(selectEmployeeState); // Selecting employee state from EmployeeSlice
 
     const handleLogoutClick = () => {
-        if (user.isLoggedIn) {
+        if (user && user.isLoggedIn) {
             fetch("/userlogout", { method: 'DELETE' }).then((r) => {
                 if (r.ok) {
                     dispatch(clearUser());
                 }
             });
-        } else if (employee.isLoggedIn) {
+        } else if (employee && employee.isLoggedIn) {
             fetch("/employeelogout", { method: 'DELETE' }).then((r) => {
                 if (r.ok) {
                     dispatch(clearEmployee());
@@ -42,12 +42,12 @@ function NavBar() {
                     <li>
                         <Link to='/account' className="nav-link">Account</Link>
                     </li>
-                    {user.isLoggedIn && (
+                    {user && user.isLoggedIn && (
                         <li>
                             <Link to='/subscriptions' className="nav-link">Subscriptions</Link>
                         </li>
                     )}
-                    {employee.isLoggedIn && (
+                    {employee && employee.isLoggedIn && (
                         <li>
                             <Link to='/new/provider' className="nav-link">New Provider</Link>
                         </li>

@@ -106,5 +106,6 @@ export const deleteEmployee = () => async (dispatch) => {
     }
 };
 
+export const selectEmployeeState = (state) => state.employee;
 export default employeeSlice.reducer;
 

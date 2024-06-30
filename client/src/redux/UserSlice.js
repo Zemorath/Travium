@@ -108,4 +108,6 @@ export const deleteUser = () => async (dispatch) => {
     }
 }
 
+
+export const selectUserState = (state) => state.user;
 export default userSlice.reducer;
