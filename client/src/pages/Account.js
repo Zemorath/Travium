@@ -4,11 +4,13 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup'
 import Label from "../styles/Label"
 import '../styles/AccountInfo.css'
+import { useDispatch } from '../redux/UserSlice'
+import { updateUser, deleteUser } from '../redux/UserSlice'
 
 
 
 function Account({ user }) {
-
+    const dispatch = useDispatch()
     const [showInput, setShowInput] = useState(false)
     
     
@@ -19,37 +21,49 @@ function Account({ user }) {
 
     const handleDeleteClick = async () => {
 
-        const confirmDelete = window.confirm("Are you sure you want to delete your account?")
+        // const confirmDelete = window.confirm("Are you sure you want to delete your account?")
+        // if (confirmDelete) {
+        //     const response = await fetch('/userinfo', {
+        //     method: "DELETE",
+        // });
+        //     if (response.ok) {
+        //         alert("Account deleted successfully")
+        //         window.location.reload()
+        //     }
+        // }
+
+        const confirmDelete = (window.confirm("Are you sure you want to delete your account?"))
         if (confirmDelete) {
-            const response = await fetch('/userinfo', {
-            method: "DELETE",
-        });
-            if (response.ok) {
-                alert("Account deleted successfully")
-                window.location.reload()
-            }
+            dispatch(deleteUser())
         }
     }
 
    
 
     const handleSubmit = async (values) => {
-        try {
-            const response = await fetch('/userinfo', {
-                method: 'PATCH',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(values, null, 2),
-            });
+        // try {
+        //     const response = await fetch('/userinfo', {
+        //         method: 'PATCH',
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //         },
+        //         body: JSON.stringify(values, null, 2),
+        //     });
 
-            if (response.ok) {
-                window.location.reload()
-            } else {
-                console.error("An error occurred while submitting the form.");
-            } 
+        //     if (response.ok) {
+        //         window.location.reload()
+        //     } else {
+        //         console.error("An error occurred while submitting the form.");
+        //     } 
+        // } catch (error) {
+        //     console.error('An error occurred while submitting the form.', error)
+        // }
+
+        try {
+            await dispatch(updateUser(values))
+            setShowInput(false)
         } catch (error) {
-            console.error('An error occurred while submitting the form.', error)
+            console.error('An error occurred while updating username', error)
         }
     }
 

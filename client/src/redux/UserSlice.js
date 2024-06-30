@@ -66,4 +66,32 @@ export const signupUser = (userData) => async (dispatch) => {
     }
 }
 
+export const updateUser = (newUserData) => async (dispatch) => {
+    try {
+        const response = await api.patch('/userinfo', newUserData)
+        if (response.ok) {
+            dispatch(setUser(response.data.user))
+        } else {
+            dispatch(setError('Failed to update username'))
+        }
+    } catch (error) {
+        dispatch(setError('Failed to update username'))
+    }
+}
+
+export const deleteUser = () => async (dispatch) => {
+    try {
+        const response = await api.delete('/userinfo')
+        if (response.ok) {
+            dispatch(clearUser())
+            alert("Account deleted successfully")
+            window.location.reload()
+        } else {
+            dispatch(setError('Failed to delete account'))
+        }
+    } catch (error) {
+        dispatch(setError('Failed to delete account'))
+    }
+}
+
 export default userSlice.reducer;
