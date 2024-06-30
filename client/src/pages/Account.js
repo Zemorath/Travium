@@ -4,13 +4,16 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup'
 import Label from "../styles/Label"
 import '../styles/AccountInfo.css'
-import { useDispatch } from 'react-redux'
-import { updateUser, deleteUser } from '../redux/UserSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateUser, deleteUser, selectUserState } from '../redux/UserSlice'
+import { selectEmployeeState, updateEmployee, deleteEmployee } from '../redux/EmployeeSlice'
 
 
 
-function Account({ user }) {
+function Account() {
     const dispatch = useDispatch()
+    const user = useSelector(selectUserState)
+    const employee = useSelector(selectEmployeeState)
     const [showInput, setShowInput] = useState(false)
     
     
@@ -19,20 +22,25 @@ function Account({ user }) {
         setShowInput(!showInput)
     }
 
-    const handleDeleteClick = async () => {
+    const handleDelete = async () => {
 
         const confirmDelete = (window.confirm("Are you sure you want to delete your account?"))
         if (confirmDelete) {
-            dispatch(deleteUser())
+            if (employee.isLoggedIn) {
+                dispatch(deleteEmployee())
+            } else {
+                dispatch(deleteUser())
+            }
         }
     }
 
-   
-
-    const handleSubmit = async (values) => {
-
+    const handleEdit = async (values) => {
         try {
-            await dispatch(updateUser(values))
+            if (employee.isLoggedIn) {
+                await dispatch(updateEmployee(values))
+            } else {
+                await dispatch(updateUser(values))
+            }
             setShowInput(false)
         } catch (error) {
             console.error('An error occurred while updating username', error)
@@ -40,7 +48,7 @@ function Account({ user }) {
     }
 
     const initialValues = {
-        username: '', 
+        username: employee.isLoggedIn ? employee.username || '' : user.username || '', 
     }
         
     const validationSchema = Yup.object({
@@ -48,7 +56,7 @@ function Account({ user }) {
             .required('Username Required')
             .test('is-unique', 'Username must be unique', function (value) {
                 // Check if the value is different from the current username
-                if (value !== user.username) {
+                if (value !== (employee.isLoggedIn ? employee.username : user.username)) {
                     return true; // Username is unique
                 } else {
                     return false; // Username is not unique
@@ -61,33 +69,42 @@ function Account({ user }) {
 
     return (
         <>
-            <Header>User Information</Header>
+            <Header>{employee.isLoggedIn ? 'Employee Information' : 'User Information'}</Header>
             <UserTemplate>
                 <InfoRow>
                     <Info>Username:</Info>
-                    <Info>{user.username}</Info>
-                </InfoRow>
-                <InfoRow>
-                    <Info>First Name:</Info>
-                    <Info>{user.first_name}</Info>
-                </InfoRow>
-                <InfoRow>
-                    <Info>Last Name:</Info>
-                    <Info>{user.last_name}</Info>
+                    <Info>{employee.isLoggedIn ? employee.username : user.username}</Info>
                 </InfoRow>
                 <InfoRow>
                     <Info>Email:</Info>
-                    <Info>{user.email}</Info>
+                    <Info>{employee.isLoggedIn ? employee.email : user.email}</Info>
                 </InfoRow>
-                <InfoRow>
-                    <Info>Date Joined:</Info>
-                    <Info>{user.created_at}</Info>
-                </InfoRow>
+                {!employee.isLoggedIn && (
+                    <>
+                        <InfoRow>
+                            <Info>First Name:</Info>
+                            <Info>{user.first_name}</Info>
+                        </InfoRow>
+                        <InfoRow>
+                            <Info>Last Name:</Info>
+                            <Info>{user.last_name}</Info>
+                        </InfoRow>
+                        
+                        <InfoRow>
+                            <Info>Date Joined:</Info>
+                            <Info>{user.created_at}</Info>
+                        </InfoRow>
+                    </>
+                )}
             </UserTemplate>
-            <div className = 'button-container'>
-                <button onClick={handleForm} className = 'change-username-btn'>Change Username</button>
+            <div className='button-container'>
+                {!employee.isLoggedIn && (
+                    <button onClick={handleForm} className='change-username-btn'>
+                        Change Username
+                    </button>
+                )}
                 {showInput && (
-                    <div className = "form-container">
+                    <div className="form-container">
                         <Formik
                             onSubmit={handleSubmit}
                             initialValues={initialValues}
@@ -104,21 +121,23 @@ function Account({ user }) {
                                     <ErrorMessage name='username' />
                                 </FieldContainer>
                                 <button type='submit'>Submit</button>
-                            </Form>      
+                            </Form>
                         </Formik>
                         <button onClick={handleForm} className='back-btn'>Back</button>
                     </div>
                 )}
-                
-                <button onClick={handleDeleteClick} className = 'delete-account-btn'>Delete Account</button>
-            </div>    
-         </>
-    )
+
+                <button onClick={handleDeleteClick} className='delete-account-btn'>
+                    {employee.isLoggedIn ? 'Delete Employee Account' : 'Delete User Account'}
+                </button>
+            </div>
+        </>
+    );
 }
 
 const FieldContainer = styled.div`
     padding-top: 15px;
-`
+`;
 
 const UserTemplate = styled.table`
     width: 30%;
@@ -128,24 +147,24 @@ const UserTemplate = styled.table`
     padding: 10px;
     margin-top: 1%;
     text-align: center;
-`
+`;
 
 const InfoRow = styled.tr`
-    background-color: white
+    background-color: white;
 
     &:hover {
         background-color: #ddd;
     }
-`
+`;
 
 const Info = styled.td`
     border: 1px solid black;
-`
+`;
 
 const Header = styled.h1`
     text-align: center;
     font-size: 24px;
     margin-top: 1%;
-`
+`;
 
-export default Account
+export default Account;
