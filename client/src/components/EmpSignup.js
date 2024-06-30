@@ -1,35 +1,45 @@
-import React, { useState } from "react";
+import React from "react";
 import Label from "../styles/Label"
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import styled from "styled-components";
 import * as Yup from 'yup'
+import { useDispatch, useSelector } from 'react-redux'
+import { signupEmployee } from '../redux/EmployeeSlice'
 
 
-function EmpSignUp({ onLogin }) {
+function EmpSignUp() {
 
-    const [errorMessage, setErrorMessage] = useState(false)
+    const dispatch = useDispatch()
+    const error = useSelector(state => state.employee.error)
+
 
     const handleSubmit = async (values) => {
-        console.log(JSON.stringify(values, null, 2))
-        try {
-            const response = await fetch('/employeesignup', {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(values, null, 2),
-            });
-
-            if (response.ok) {
-                console.log("Form submitted", values);
-                response.json().then((user) => onLogin(user))
-            } else {
-                setErrorMessage(true);
-            }
-        } catch (error) {
-            console.error('An error occurred while submitting the form.', error)
-        }
+        dispatch(signupEmployee(values));
     }
+
+    // const [errorMessage, setErrorMessage] = useState(false)
+
+    // const handleSubmit = async (values) => {
+    //     console.log(JSON.stringify(values, null, 2))
+    //     try {
+    //         const response = await fetch('/employeesignup', {
+    //             method: 'POST',
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(values, null, 2),
+    //         });
+
+    //         if (response.ok) {
+    //             console.log("Form submitted", values);
+    //             response.json().then((user) => onLogin(user))
+    //         } else {
+    //             setErrorMessage(true);
+    //         }
+    //     } catch (error) {
+    //         console.error('An error occurred while submitting the form.', error)
+    //     }
+    // }
 
     const initialValues = {
         username: '', 
@@ -78,7 +88,7 @@ function EmpSignUp({ onLogin }) {
                     />
                     <ErrorMessage name='email' />
                 </FieldContainer>   
-                {errorMessage && (<ErrorText>Username or Email is already in use</ErrorText>)} 
+                {error && (<ErrorText>{error}</ErrorText>)} 
                 <button type='submit'>
                     Submit
                 </button>
