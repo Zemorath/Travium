@@ -45,7 +45,7 @@ class EmployeeSignup(Resource):
             new_employee.password_hash=data.get('password')
             db.session.add(new_employee)
             db.session.commit()
-            session['user_id'] = new_employee.id
+            session['employee_id'] = new_employee.id
             return new_employee.to_dict(), 201
         else:
             return {"message": "Entry could not be processed"}, 422
@@ -113,7 +113,7 @@ class UserCheckSession(Resource):
 class EmpCheckSession(Resource):
 
     def get(self):
-        emp_id = session['emp_id']
+        emp_id = session['employee_id']
         if emp_id:
             emp = Employee.query.filter(Employee.id == emp_id).first()
             return emp.to_dict(), 200
