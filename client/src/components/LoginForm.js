@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom"
 import Label from "../styles/Label"
 import Button from "../styles/Button"
 import "../styles/SubForm.css"
@@ -26,6 +27,11 @@ function LoginForm() {
 
     const handleSubmit = async (values) => {
         dispatch(loginUser(values))
+            .then((result) => {
+                if (result.payload) {
+                    history.push("/")
+                }
+            })
     }
 
     return (

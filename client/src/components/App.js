@@ -1,5 +1,5 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Switch, Route, useHistory } from "react-router-dom";
 import NavBar from "./NavBar";
 // import LoginForm from "./LoginForm";
 // import SignUpForm from "./SignUpForm";
@@ -9,13 +9,34 @@ import Account from "../pages/Account";
 import Home from "../pages/Home"
 import NewSubscription from "../pages/NewSubscription";
 import NewProvider from '../pages/NewProvider';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUser } from '../redux/UserSlice'
 
 function App() {
-
+    
+    const dispatch = useDispatch()
     const user = useSelector(state => state.user.user)
+    const history = useHistory()
 
-    if (!user) return <Login />;
+    useEffect(() => {
+        const checkSession = async () => {
+            try {
+                const response = await fetch('/checksession')
+                if (response.ok) {
+                    const userData = await response.json()
+                    dispatch(setUser(userData))
+                } else {
+                    history.push("/login")
+                }
+            } catch (error) {
+                history.push('/login')
+            }
+        }
+
+        checkSession()
+    }, [dispatch, history])
+
+    // if (!user) return <Login />;
 
     return (
         <>
@@ -33,6 +54,9 @@ function App() {
                     </Route>
                     <Route path="/new/provider">
                         <NewProvider user={user}/>
+                    </Route>
+                    <Route path='/login'>
+                        <Login />
                     </Route>
                     <Route path="/">
                         <Home />
