@@ -25,6 +25,7 @@ function App() {
                 if (response.ok) {
                     const userData = await response.json()
                     dispatch(setUser(userData))
+                    history.push("/")
                 } else {
                     history.push("/login")
                 }
