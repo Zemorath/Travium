@@ -69,8 +69,8 @@ class UserLogin(Resource):
 class EmployeeLogin(Resource):
 
     def post(self):
-        email = request.get_json().get('email')
-        employee = Employee.query.filter(Employee.email == email).first()
+        username = request.get_json().get('username')
+        employee = Employee.query.filter(Employee.username == username).first()
 
         if employee:
             session['employee_id'] = employee.id
