@@ -30,6 +30,7 @@ function LoginForm() {
         dispatch(loginUser(values))
             .then((result) => {
                 if (result.payload) {
+                    localStorage.setItem('userToken')
                     history.push("/")
                 }
             })

@@ -56,9 +56,6 @@ function App() {
                     <Route path="/new/provider">
                         <NewProvider user={user}/>
                     </Route>
-                    {/* <Route path='/login'>
-                        <Login />
-                    </Route> */}
                     <Route path="/">
                         <Home />
                     </Route>

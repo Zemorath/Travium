@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { RiArrowDropDownLine } from "react-icons/ri"
 import "../styles/Accordion.css";
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchUserSubscriptions, selectUserSubscriptions } from '../redux/UserSubscriptionsSlice';
+
 
 
 
@@ -40,14 +42,13 @@ const AccordionItem = ({ type, sub_price, provider_price, description, status, p
 
 
 const Accordion = () => {
-    const [activeIndex, setActiveIndex] = useState(null)
-    const [subscriptions, setsubScriptions] = useState([]);
+    const dispatch = useDispatch();
+    const userSubscriptions = useSelector(selectUserSubscriptions);
+    const [activeIndex, setActiveIndex] = useState(null);
 
     useEffect(() => {
-        fetch('/subscriptionsusing')
-            .then((r) => r.json())
-            .then(setsubScriptions)
-    }, []);
+        dispatch(fetchUserSubscriptions());
+    }, [dispatch]);
 
     const handleItemClick = (index) => {
         setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
@@ -56,29 +57,20 @@ const Accordion = () => {
     return (
         <Wrapper>
             <div className='container'>
-                <Heading>Current Services</Heading>
-                {subscriptions.map((item, index) => (
-                    <AccordionItem 
-                        key={index} 
-                        type={item.type} 
-                        sub_price={item.sub_price} 
-                        provider_price={item.provider_price} 
-                        description={item.description} 
+                <Heading>Current Subscriptions</Heading>
+                {userSubscriptions.map((item, index) => (
+                    <AccordionItem
+                        key={index}
+                        type={item.type}
+                        sub_price={item.sub_price}
+                        provider_price={item.provider_price}
+                        description={item.description}
                         status={item.status}
                         provider={item.provider.company}
                         isOpen={activeIndex === index}
                         onClick={() => handleItemClick(index)}
-                    />    
+                    />
                 ))}
-                <div className="sub-button-container">
-                
-                <button className='sub-button'>
-                    <Link to="/services/newsubscription" className="sub-link">
-                    Add a new subscription!
-                    </Link>
-                </button>
-            
-            </div>
             </div>
         </Wrapper>
     )
@@ -99,4 +91,4 @@ const Wrapper = styled.section`
     padding-left: 50px;
 `;
 
-export default Accordion
+export default Accordion;
