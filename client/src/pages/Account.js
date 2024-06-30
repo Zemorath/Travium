@@ -106,7 +106,7 @@ function Account() {
                 {showInput && (
                     <div className="form-container">
                         <Formik
-                            onSubmit={handleSubmit}
+                            onSubmit={handleEdit}
                             initialValues={initialValues}
                             validationSchema={validationSchema}
                         >
@@ -127,7 +127,7 @@ function Account() {
                     </div>
                 )}
 
-                <button onClick={handleDeleteClick} className='delete-account-btn'>
+                <button onClick={handleDelete} className='delete-account-btn'>
                     {employee.isLoggedIn ? 'Delete Employee Account' : 'Delete User Account'}
                 </button>
             </div>
