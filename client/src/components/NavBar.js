@@ -3,14 +3,18 @@ import { Link } from "react-router-dom";
 import '../styles/NavBar.css';
 import Button from "../styles/Button";
 import logo from '../assets/Travium.png';
+import { useDispatch } from 'react-redux'
+import { setUser } from '../redux/UserSlice'
 
 
-function NavBar({ user, setUser }) {
+function NavBar() {
+
+    const dispatch = useDispatch()
 
     function handleLogoutClick() {
         fetch("/userlogout", { method: 'DELETE'}).then((r) => {
             if (r.ok) {
-                setUser(null);
+                dispatch(setUser(null))
             }
         })
     }

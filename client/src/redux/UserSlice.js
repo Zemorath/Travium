@@ -15,10 +15,13 @@ const userSlice = createSlice({
         setError: (state, action) => {
             state.error = action.payload;
         },
+        clearUser: (state) => {
+            state.user = null
+        }
     },
 });
 
-export const { setUser, setError } = userSlice.actions;
+export const { setUser, setError, clearUser } = userSlice.actions;
 
 
 export const loginUser = (credentials) => async (dispatch) => {
