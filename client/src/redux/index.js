@@ -3,7 +3,7 @@ import userReducer from './UserSlice'
 import providersReducer from './ProviderSlice'
 import servicesReducer from './ServicesSlice'
 import userSubscriptionsSlice from './userSubscriptionSlice'
-import employeesReducer from './EmployeeSlice'
+import employeeReducer from './EmployeeSlice'
 
 
 const store = configureStore({
@@ -12,7 +12,7 @@ const store = configureStore({
         providers: providersReducer,
         services: servicesReducer,
         userSubscriptions: userSubscriptionsSlice,
-        employees: employeesReducer,
+        employee: employeeReducer,
     }
 });
 
