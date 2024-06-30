@@ -75,7 +75,6 @@ function SubForm({ user }) {
         sub_price: 10,
         description: '',
         status: 'active',
-        user_id: id,
         provider_id: 1,
         provider_price: null,
     }
