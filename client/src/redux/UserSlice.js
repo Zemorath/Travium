@@ -66,31 +66,42 @@ export const signupUser = (userData) => async (dispatch) => {
     }
 }
 
-export const updateUser = (newUserData) => async (dispatch) => {
+export const updateUser = (updatedUserData) => async (dispatch) => {
     try {
-        const response = await api.patch('/userinfo', newUserData)
+        const response = await fetch('/userinfo', {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedUserData)
+        })
+
         if (response.ok) {
-            dispatch(setUser(response.data.user))
+            const user = await response.json()
+            dispatch(setUser(user))
         } else {
-            dispatch(setError('Failed to update username'))
+            const error = await response.json()
+            dispatch(setError(error.message))
         }
     } catch (error) {
-        dispatch(setError('Failed to update username'))
+        dispatch(setError('An error occurred while udpating user information'))
     }
 }
 
 export const deleteUser = () => async (dispatch) => {
     try {
-        const response = await api.delete('/userinfo')
+        const response = await fetch('/userinfo', {
+            method: 'DELETE',
+        });
+
         if (response.ok) {
-            dispatch(clearUser())
-            alert("Account deleted successfully")
-            window.location.reload()
+            dispatch(clearUser());
         } else {
-            dispatch(setError('Failed to delete account'))
+            const error = await response.json();
+            dispatch(setError(error.message));
         }
     } catch (error) {
-        dispatch(setError('Failed to delete account'))
+        dispatch(setError('An error occurred while deleting user account'));
     }
 }
 
