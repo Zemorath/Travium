@@ -37,7 +37,7 @@ function App() {
         checkSession()
     }, [dispatch, history])
 
-    // if (!user) return <Login />;
+    if (!user) return <Login path='/login'/>;
 
     return (
         <>
@@ -56,9 +56,9 @@ function App() {
                     <Route path="/new/provider">
                         <NewProvider user={user}/>
                     </Route>
-                    <Route path='/login'>
+                    {/* <Route path='/login'>
                         <Login />
-                    </Route>
+                    </Route> */}
                     <Route path="/">
                         <Home />
                     </Route>
