@@ -12,21 +12,6 @@ import NewProvider from '../pages/NewProvider';
 import { useSelector } from 'react-redux'
 
 function App() {
-    // const [user, setUser] = useState(null);
-
-    // useEffect(() => {
-    //     fetch("/userchecksession").then((r) => {
-    //         if (r.ok) {
-    //             r.json().then((user) => setUser(user));
-    //         } else {
-    //             fetch('/employee/session').then((a) => {
-    //                 if (a.ok) {
-    //                     a.json().then((user) => setUser(user))
-    //                 }
-    //             })
-    //         }
-    //     });
-    // }, []);
 
     const user = useSelector(state => state.user.user)
 

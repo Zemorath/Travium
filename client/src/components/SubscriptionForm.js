@@ -1,48 +1,66 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router"
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import styled from "styled-components";
 import FormikControl from './FormikControl'
 import "../styles/SubForm.css"
 import * as Yup from 'yup'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProviders, selectProviders} from '../redux/ProviderSlice'
+import { fetchServices, selectServices } from '../redux/ServicesSlice'
 
 
 function SubForm({ user }) {
 
+    const dispatch = useDispatch()
     const history = useHistory();
 
-    const [providers, setProviders] = useState([])
     useEffect(() => {
-        fetch('/providers').then((r) => {
-            if (r.ok) {
-                r.json().then((providers) => setProviders(providers))
-            }
-        });
-    }, []);
+        dispatch(fetchProviders())
+        dispatch(fetchServices())
+    }, [dispatch])
 
-    const [services, setServices] = useState([])
-    useEffect(() => {
-        fetch('/availableservices').then((r) => {
-            if (r.ok) {
-                r.json().then((services) => setServices(services))
-            }
-        });
-    }, []);
+    const providers = useSelector(selectProviders)
+    const services = useSelector(selectServices)
 
-    const id = user.id
+    // const [providers, setProviders] = useState([])
+    // useEffect(() => {
+    //     fetch('/providers').then((r) => {
+    //         if (r.ok) {
+    //             r.json().then((providers) => setProviders(providers))
+    //         }
+    //     });
+    // }, []);
+
+    // const [services, setServices] = useState([])
+    // useEffect(() => {
+    //     fetch('/availableservices').then((r) => {
+    //         if (r.ok) {
+    //             r.json().then((services) => setServices(services))
+    //         }
+    //     });
+    // }, []);
+
+    // const id = user.id
 
     const handleSubmit = async (values) => {
+
+        const payload = {
+            ...values,
+            user_id: user.id
+        }
+
         try {
             const response = await fetch("/subscriptionsusing", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(values, null, 2)
+                body: JSON.stringify(payload)
             });
-            console.log(values)
+            
             if (response.ok) {
-                console.log("Form submitted", values)
+                console.log("Form submitted", payload)
                 history.push('/services')
             } else {
                 console.error("An error occurred when submitting the form")

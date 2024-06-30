@@ -10,31 +10,7 @@ import { loginUser } from '../redux/UserSlice'
 
 function LoginForm() {
     const dispatch = useDispatch();
-    // const [showError, setShowError] = useState(false)
-    // const user = useSelector((state) => state.user.user)
     const error = useSelector((state) => state.user.error)
-
-    // const handleSubmit = async (values) => {
-    //     try {
-    //         const response = await fetch('/userlogin', {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify(values, null, 2)
-    //         });
-
-    //         if (response.ok) {
-    //             console.log("Form submitted", values);
-    //             response.json().then((user) => onLogin(user))
-    //         } else {
-    //             console.error("An error occurred while submitting the form.");
-    //             setShowError(true)
-    //         } 
-    //     } catch (error) {
-    //         console.error('An error occurred while submitting the form.', error)
-    //     }
-    // }
     
 
 
@@ -51,10 +27,6 @@ function LoginForm() {
     const handleSubmit = async (values) => {
         dispatch(loginUser(values))
     }
-
-    // if (user) {
-    //     return <Redirect to="/" />
-    // }
 
     return (
         <Formik 

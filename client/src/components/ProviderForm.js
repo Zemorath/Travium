@@ -5,7 +5,7 @@ import styled from "styled-components";
 import "../styles/SubForm.css"
 import * as Yup from 'yup'
 
-function ProviderForm({ user }) {
+function ProviderForm() {
 
     const history = useHistory();
 

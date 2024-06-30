@@ -21,17 +21,6 @@ function Account({ user }) {
 
     const handleDeleteClick = async () => {
 
-        // const confirmDelete = window.confirm("Are you sure you want to delete your account?")
-        // if (confirmDelete) {
-        //     const response = await fetch('/userinfo', {
-        //     method: "DELETE",
-        // });
-        //     if (response.ok) {
-        //         alert("Account deleted successfully")
-        //         window.location.reload()
-        //     }
-        // }
-
         const confirmDelete = (window.confirm("Are you sure you want to delete your account?"))
         if (confirmDelete) {
             dispatch(deleteUser())
@@ -41,23 +30,6 @@ function Account({ user }) {
    
 
     const handleSubmit = async (values) => {
-        // try {
-        //     const response = await fetch('/userinfo', {
-        //         method: 'PATCH',
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify(values, null, 2),
-        //     });
-
-        //     if (response.ok) {
-        //         window.location.reload()
-        //     } else {
-        //         console.error("An error occurred while submitting the form.");
-        //     } 
-        // } catch (error) {
-        //     console.error('An error occurred while submitting the form.', error)
-        // }
 
         try {
             await dispatch(updateUser(values))
