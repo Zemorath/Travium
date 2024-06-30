@@ -21,7 +21,7 @@ function App() {
     useEffect(() => {
         const checkSession = async () => {
             try {
-                const response = await fetch('/checksession')
+                const response = await fetch('/userchecksession')
                 if (response.ok) {
                     const userData = await response.json()
                     dispatch(setUser(userData))
