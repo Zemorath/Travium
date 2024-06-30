@@ -20,7 +20,7 @@ function NavBar() {
                 }
             });
         } else if (employee && employee.isLoggedIn) {
-            fetch("/employeelogout", { method: 'DELETE' }).then((r) => {
+            fetch("/logout/employee", { method: 'DELETE' }).then((r) => {
                 if (r.ok) {
                     dispatch(clearEmployee());
                 }
