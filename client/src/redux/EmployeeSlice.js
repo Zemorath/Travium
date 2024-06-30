@@ -1,25 +1,107 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  isLoggedIn: false,
-};
-
-const employeesSlice = createSlice({
-  name: 'employees',
-  initialState,
-  reducers: {
-    loginEmployee(state) {
-      state.isLoggedIn = true;
+const employeeSlice = createSlice({
+    name: 'employee',
+    initialState: {
+        employee: null,
+        error: null,
     },
-    logoutEmployee(state) {
-      state.isLoggedIn = false;
-      // Reset any other state related to employees on logout if needed
+    reducers: {
+        setEmployee: (state, action) => {
+            state.employee = action.payload;
+            state.error = null;
+        },
+        setError: (state, action) => {
+            state.error = action.payload;
+        },
+        clearEmployee: (state) => {
+            state.employee = null;
+        }
     },
-  },
 });
 
-export const { loginEmployee, logoutEmployee } = employeesSlice.actions;
+export const { setEmployee, setError, clearEmployee } = employeeSlice.actions;
 
-export const selectEmployeeState = (state) => state.employees;
+export const loginEmployee = (credentials) => async (dispatch) => {
+    try {
+        const response = await fetch ('/employeelogin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(credentials),
+        });
 
-export default employeesSlice.reducer;
+        if (response.ok) {
+            const employee = await response.json();
+            dispatch(setEmployee(employee));
+        } else {
+            dispatch(setError('Invalid username or password'));
+        }
+    } catch (error) {
+        dispatch(setError('An error occurred while logging in'));
+    }
+};
+
+export const signupEmployee = (employeeData) => async (dispatch) => {
+    try {
+        const response = await fetch('/employeesignup', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(employeeData),
+        });
+
+        if (response.ok) {
+            const employee = await response.json();
+            dispatch(setEmployee(employee));
+        } else {
+            dispatch(setError('Username or email is already in use'));
+        }
+    } catch (error) {
+        dispatch(setError('An error occurred while signing up'));
+    }
+};
+
+export const updateEmployee = (updatedEmployeeData) => async (dispatch) => {
+    try {
+        const response = await fetch('/employeeinfo', {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedEmployeeData)
+        });
+
+        if (response.ok) {
+            const employee = await response.json();
+            dispatch(setEmployee(employee));
+        } else {
+            const error = await response.json();
+            dispatch(setError(error.message));
+        }
+    } catch (error) {
+        dispatch(setError('An error occurred while updating employee information'));
+    }
+};
+
+export const deleteEmployee = () => async (dispatch) => {
+    try {
+        const response = await fetch('/employeeinfo', {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            dispatch(clearEmployee());
+        } else {
+            const error = await response.json();
+            dispatch(setError(error.message));
+        }
+    } catch (error) {
+        dispatch(setError('An error occurred while deleting employee account'));
+    }
+};
+
+export default employeeSlice.reducer;
+
