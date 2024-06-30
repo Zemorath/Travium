@@ -23,25 +23,6 @@ function SubForm({ user }) {
     const providers = useSelector(selectProviders)
     const services = useSelector(selectServices)
 
-    // const [providers, setProviders] = useState([])
-    // useEffect(() => {
-    //     fetch('/providers').then((r) => {
-    //         if (r.ok) {
-    //             r.json().then((providers) => setProviders(providers))
-    //         }
-    //     });
-    // }, []);
-
-    // const [services, setServices] = useState([])
-    // useEffect(() => {
-    //     fetch('/availableservices').then((r) => {
-    //         if (r.ok) {
-    //             r.json().then((services) => setServices(services))
-    //         }
-    //     });
-    // }, []);
-
-    // const id = user.id
 
     const handleSubmit = async (values) => {
 
