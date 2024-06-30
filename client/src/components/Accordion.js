@@ -3,7 +3,7 @@ import { RiArrowDropDownLine } from "react-icons/ri"
 import "../styles/Accordion.css";
 import styled from "styled-components";
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUserSubscriptions, selectUserSubscriptions } from '../redux/UserSubscriptionsSlice';
+import { fetchUserSubscriptions, selectUserSubscriptions } from '../redux/userSubscriptionSlice';
 
 
 
