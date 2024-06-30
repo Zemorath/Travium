@@ -11,6 +11,7 @@ import NewSubscription from "../pages/NewSubscription";
 import NewProvider from '../pages/NewProvider';
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../redux/UserSlice'
+import { setEmployee } from '../redux/EmployeeSlice'
 
 function App() {
     
@@ -21,21 +22,34 @@ function App() {
     useEffect(() => {
         const checkSession = async () => {
             try {
-                const response = await fetch('/userchecksession')
-                if (response.ok) {
-                    const userData = await response.json()
-                    dispatch(setUser(userData))
-                    history.push("/")
-                } else {
-                    history.push("/login")
+                // Check for user session first
+                const userResponse = await fetch('/userchecksession');
+                if (userResponse.ok) {
+                    const userData = await userResponse.json();
+                    dispatch(setUser(userData));
+                    history.push("/");
+                    return; // Exit function if user session is valid
                 }
+    
+                // If no user session, check for employee session
+                const employeeResponse = await fetch('/employeechecksession');
+                if (employeeResponse.ok) {
+                    const employeeData = await employeeResponse.json();
+                    dispatch(setEmployee(employeeData)); // Dispatch action for employee login
+                    history.push("/");
+                    return; // Exit function if employee session is valid
+                }
+    
+                // If neither user nor employee session is valid, redirect to login
+                history.push("/login");
             } catch (error) {
-                history.push('/login')
+                console.error('An error occurred while checking session:', error);
+                history.push('/login');
             }
-        }
-
-        checkSession()
-    }, [dispatch, history])
+        };
+    
+        checkSession();
+    }, [dispatch, history]);
 
     if (!user) return <Login path='/login'/>;
 
