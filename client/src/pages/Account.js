@@ -4,7 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup'
 import Label from "../styles/Label"
 import '../styles/AccountInfo.css'
-import { useDispatch } from '../redux/UserSlice'
+import { useDispatch } from 'react-redux'
 import { updateUser, deleteUser } from '../redux/UserSlice'
 
 
