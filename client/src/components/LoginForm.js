@@ -12,6 +12,7 @@ import { loginUser } from '../redux/UserSlice'
 function LoginForm() {
     const dispatch = useDispatch();
     const error = useSelector((state) => state.user.error)
+    const history = useHistory()
     
 
 
