@@ -36,17 +36,14 @@ function NavBar() {
                     <li>
                         <Link to='/' className="nav-link">Home</Link>
                     </li>
-                    <li>
-                        <Link to='/services' className="nav-link">Services</Link>
-                    </li>
+                    {user && user.isLoggedIn && (
+                        <li>
+                            <Link to='/services' className="nav-link">Services</Link>
+                        </li>
+                    )}
                     <li>
                         <Link to='/account' className="nav-link">Account</Link>
                     </li>
-                    {user && user.isLoggedIn && (
-                        <li>
-                            <Link to='/subscriptions' className="nav-link">Subscriptions</Link>
-                        </li>
-                    )}
                     {employee && employee.isLoggedIn && (
                         <li>
                             <Link to='/new/provider' className="nav-link">New Provider</Link>
