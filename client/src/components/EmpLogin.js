@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom"
 import Label from "../styles/Label"
 import Button from "../styles/Button"
 import "../styles/SubForm.css"
@@ -11,6 +12,7 @@ import { loginEmployee } from '../redux/EmployeeSlice'
 function EmpLoginForm() {
     const dispatch = useDispatch()
     const error = useSelector(state => state.employee.error)
+    const history = useHistory()
 
     const handleSubmit = async (values) => {
         dispatch(loginEmployee(values))

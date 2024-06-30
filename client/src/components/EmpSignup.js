@@ -52,8 +52,6 @@ function EmpSignUp() {
         password: Yup.string().required('Password Required'),
         email: Yup.string().email('Invalid email format').required('Email Required'),
     })
-    
-    console.log('Error Message:', errorMessage);
 
     return (
         <Formik
