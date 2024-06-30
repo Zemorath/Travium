@@ -5,7 +5,7 @@ import Button from "../styles/Button";
 import logo from '../assets/Travium.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, selectUserState } from '../redux/UserSlice';
-import { selectEmployeeState } from '../redux/EmployeesSlice';
+import { selectEmployeeState } from '../redux/EmployeeSlice';
 
 function NavBar() {
     const dispatch = useDispatch();
