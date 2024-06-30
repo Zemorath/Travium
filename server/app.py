@@ -121,17 +121,6 @@ class EmpCheckSession(Resource):
             return {"message": "Unauthorized log in"}, 401
         
 
-class EmployeeCheckSession(Resource):
-
-    def get(self):
-        employee_id = session['employee_id']
-        if employee_id:
-            employee = Employee.query.filter(Employee.id == employee_id).first()
-            return employee.to_dict(), 200
-        else:
-            return {"message": "Unauthorized log in"}, 401
-        
-
 class Subscriptions_All(Resource):
     
     def get(self):

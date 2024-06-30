@@ -33,7 +33,7 @@ function App() {
                 }
     
                 // If no user session, check for employee session
-                const employeeResponse = await fetch('/employeechecksession');
+                const employeeResponse = await fetch('/employee/session');
                 if (employeeResponse.ok) {
                     const employeeData = await employeeResponse.json();
                     dispatch(setEmployee(employeeData)); // Dispatch action for employee login
