@@ -4,21 +4,29 @@ import '../styles/NavBar.css';
 import Button from "../styles/Button";
 import logo from '../assets/Travium.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../redux/UserSlice';
-import { selectEmployeeState } from '../redux/EmployeeSlice';
+import { setUser } from '../redux/UserSlice'; // Adjusted for UserSlice
+import { clearEmployee } from '../redux/EmployeeSlice'; // Adjusted for EmployeeSlice
 
 function NavBar() {
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.user.user)
-    const employee = useSelector(selectEmployeeState);
+    const user = useSelector(state => state.user.user); // Selecting user state from UserSlice
+    const employee = useSelector(state => state.employee.employee); // Selecting employee state from EmployeeSlice
 
-    function handleLogoutClick() {
-        fetch("/userlogout", { method: 'DELETE'}).then((r) => {
-            if (r.ok) {
-                dispatch(setUser(null));
-            }
-        });
-    }
+    const handleLogoutClick = () => {
+        if (user.isLoggedIn) {
+            fetch("/userlogout", { method: 'DELETE' }).then((r) => {
+                if (r.ok) {
+                    dispatch(setUser(null));
+                }
+            });
+        } else if (employee.isLoggedIn) {
+            fetch("/employeelogout", { method: 'DELETE' }).then((r) => {
+                if (r.ok) {
+                    dispatch(clearEmployee());
+                }
+            });
+        }
+    };
 
     return (
         <div className="navbar">
