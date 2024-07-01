@@ -233,6 +233,59 @@ class UserByID(Resource):
                 return {"error": error_message}, 500
         else:
             return {"message": "User not signed in"}, 401
+        
+class EmployeeByID(Resource):
+
+    def get(self):
+
+        if session['employee_id']:
+            employee_id = session['employee_id']
+            employee = Employee.query.filter(Employee.id==employee_id).first().to_dict()
+            return make_response(jsonify(employee), 200)
+        else:
+            return {"message": "Employee not signed in"}, 401
+    
+    def patch(self):
+
+        if session['employee_id']:
+            employee_id = session['employee_id']
+            employee = Employee.query.filter(Employee.id==employee_id).first()
+            json_data = request.get_json()
+
+            username = json_data.get('username')
+            setattr(employee, 'username', username)
+
+            db.session.add(employee)
+            db.session.commit()
+
+            employee_dict = employee.to_dict()
+
+            return make_response(employee_dict, 200)
+        else:
+            return {"message": "Employee not signed in"}, 401
+        
+    def delete(self):
+
+        if session['employee_id']:
+            try:
+                employee_id = session['employee_id']
+                employee = Employee.query.filter(Employee.id == employee_id).first()
+
+                if Employee:
+                    db.session.delete(employee)
+                    db.session.commit()
+
+                    session['employee_id'] = None
+                    return make_response({}, 204)
+                else:
+                    return {"error": "Employee not found"}, 404
+            except Exception as e:
+                db.session.rollback()
+                error_message = f"Error deleting Employee: {str(e)}"
+                app.logger.error(error_message)
+                return {"error": error_message}, 500
+        else:
+            return {"message": "Employee not signed in"}, 401
     
 
 
@@ -259,6 +312,7 @@ api.add_resource(UserCheckSession, '/userchecksession', endpoint='userchecksessi
 api.add_resource(Subscriptions_All, '/subscriptionsall', endpoint='subscriptionsall')
 api.add_resource(Subscriptions_Using, '/subscriptionsusing', endpoint='subscriptionsusing')
 api.add_resource(Providers, '/providers', endpoint='providers')
+api.add_resource(EmployeeByID, '/employeeinfo', endpoint='employeeinfo')
 api.add_resource(UserByID, '/userinfo', endpoint='userinfo')
 api.add_resource(All_Available_Services, '/availableservices', endpoint='availableservices')
 api.add_resource(EmpCheckSession, '/employee/session', endpoint='employeesession')
