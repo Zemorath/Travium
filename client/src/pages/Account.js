@@ -4,9 +4,9 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup'
 import Label from "../styles/Label"
 import '../styles/AccountInfo.css'
-import { useDispatch } from 'react-redux'
-import { updateUser, deleteUser } from '../redux/UserSlice'
-import { updateEmployee, deleteEmployee } from '../redux/EmployeeSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateUser, deleteUser, selectUserState } from '../redux/UserSlice'
+import { updateEmployee, deleteEmployee, selectEmployeeState } from '../redux/EmployeeSlice'
 
 
 
@@ -98,11 +98,9 @@ function Account({ userInfo, employeeInfo}) {
                 )}
             </UserTemplate>
             <div className='button-container'>
-                {!employee.isLoggedIn && (
-                    <button onClick={handleForm} className='change-username-btn'>
-                        Change Username
-                    </button>
-                )}
+                <button onClick={handleForm} className='change-username-btn'>
+                    Change Username
+                </button>
                 {showInput && (
                     <div className="form-container">
                         <Formik
