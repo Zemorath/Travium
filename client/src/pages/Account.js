@@ -4,16 +4,16 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup'
 import Label from "../styles/Label"
 import '../styles/AccountInfo.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { updateUser, deleteUser, selectUserState } from '../redux/UserSlice'
-import { selectEmployeeState, updateEmployee, deleteEmployee } from '../redux/EmployeeSlice'
+import { useDispatch } from 'react-redux'
+import { updateUser, deleteUser } from '../redux/UserSlice'
+import { updateEmployee, deleteEmployee } from '../redux/EmployeeSlice'
 
 
 
-function Account() {
+function Account({ user, employee}) {
     const dispatch = useDispatch()
-    const user = useSelector(selectUserState)
-    const employee = useSelector(selectEmployeeState)
+    // const user = useSelector(selectUserState)
+    // const employee = useSelector(selectEmployeeState)
     const [showInput, setShowInput] = useState(false)
     
     
