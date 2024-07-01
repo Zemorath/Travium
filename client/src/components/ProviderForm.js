@@ -4,8 +4,12 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import styled from "styled-components";
 import "../styles/SubForm.css"
 import * as Yup from 'yup'
+import { useSelector } from 'react-redux'
 
 function ProviderForm() {
+
+    // const user = useSelector(state => state.user.user)
+    const employee = useSelector(state => state.employee.employee)
 
     const history = useHistory();
 
@@ -21,7 +25,12 @@ function ProviderForm() {
             console.log(values)
             if (response.ok) {
                 console.log("Form submitted", values)
-                history.push('/services')
+                if (!employee) {
+                    history.push('/services')
+                } else{
+                    history.push('/')
+                }
+                
             } else {
                 console.error("An error occurred when submitting the form")
             }
