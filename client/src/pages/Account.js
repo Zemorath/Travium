@@ -10,10 +10,10 @@ import { updateEmployee, deleteEmployee } from '../redux/EmployeeSlice'
 
 
 
-function Account({ user, employee}) {
+function Account({ userInfo, employeeInfo}) {
     const dispatch = useDispatch()
-    // const user = useSelector(selectUserState)
-    // const employee = useSelector(selectEmployeeState)
+    const user = useSelector(selectUserState)
+    const employee = useSelector(selectEmployeeState)
     const [showInput, setShowInput] = useState(false)
     
     
@@ -48,7 +48,7 @@ function Account({ user, employee}) {
     }
 
     const initialValues = {
-        username: employee.isLoggedIn ? employee.username || '' : user.username || '', 
+        username: employee.isLoggedIn ? employeeInfo.username || '' : userInfo.username || '', 
     }
         
     const validationSchema = Yup.object({
@@ -56,7 +56,7 @@ function Account({ user, employee}) {
             .required('Username Required')
             .test('is-unique', 'Username must be unique', function (value) {
                 // Check if the value is different from the current username
-                if (value !== (employee.isLoggedIn ? employee.username : user.username)) {
+                if (value !== (employee.isLoggedIn ? employeeInfo.username : userInfo.username)) {
                     return true; // Username is unique
                 } else {
                     return false; // Username is not unique
@@ -73,26 +73,26 @@ function Account({ user, employee}) {
             <UserTemplate>
                 <InfoRow>
                     <Info>Username:</Info>
-                    <Info>{employee.isLoggedIn ? employee.username : user.username}</Info>
+                    <Info>{employee.isLoggedIn ? employeeInfo.username : userInfo.username}</Info>
                 </InfoRow>
                 <InfoRow>
                     <Info>Email:</Info>
-                    <Info>{employee.isLoggedIn ? employee.email : user.email}</Info>
+                    <Info>{employee.isLoggedIn ? employeeInfo.email : userInfo.email}</Info>
                 </InfoRow>
                 {!employee.isLoggedIn && (
                     <>
                         <InfoRow>
                             <Info>First Name:</Info>
-                            <Info>{user.first_name}</Info>
+                            <Info>{userInfo.first_name}</Info>
                         </InfoRow>
                         <InfoRow>
                             <Info>Last Name:</Info>
-                            <Info>{user.last_name}</Info>
+                            <Info>{userInfo.last_name}</Info>
                         </InfoRow>
                         
                         <InfoRow>
                             <Info>Date Joined:</Info>
-                            <Info>{user.created_at}</Info>
+                            <Info>{userInfo.created_at}</Info>
                         </InfoRow>
                     </>
                 )}

@@ -66,7 +66,7 @@ function App() {
                         <SubscriptionPage />
                     </Route>
                     <Route path="/account">
-                        <Account user={user}/>
+                        <Account userInfo={user} employeeInfo={employee}/>
                     </Route>
                     <Route path="/new/provider">
                         <NewProvider user={user}/>
