@@ -29,4 +29,11 @@ const Logo = styled.img`
     margin-top: 3%;
 `
 
+const Header = styled.h2`
+    text-align: center;
+    font-size: 30px;
+    weight: 10%;
+    margin-top: 3%;
+`
+
 export default Home
