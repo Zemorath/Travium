@@ -9,6 +9,7 @@ function Home() {
                 Welcome to Travium!
             </Title>
             <Logo src={logo}/>
+            <Header>Empowering others to regain control of their lives</Header>
         </>
     )
 }

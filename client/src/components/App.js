@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
 import NavBar from "./NavBar";
-// import LoginForm from "./LoginForm";
-// import SignUpForm from "./SignUpForm";
 import Login from "../pages/Login";
 import SubscriptionPage from "../pages/SubscriptionPage";
 import Account from "../pages/Account";

@@ -12,7 +12,6 @@ import { updateEmployee, deleteEmployee, selectEmployeeState } from '../redux/Em
 
 function Account({ userInfo, employeeInfo}) {
     const dispatch = useDispatch()
-    // const user = useSelector(selectUserState)
     const employee = useSelector(selectEmployeeState)
     const [showInput, setShowInput] = useState(false)
     

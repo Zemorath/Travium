@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux'
 
 function ProviderForm() {
 
-    // const user = useSelector(state => state.user.user)
     const employee = useSelector(state => state.employee.employee)
 
     const history = useHistory();
@@ -30,7 +29,6 @@ function ProviderForm() {
                 } else{
                     history.push('/')
                 }
-                
             } else {
                 console.error("An error occurred when submitting the form")
             }

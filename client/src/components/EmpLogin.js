@@ -24,29 +24,6 @@ function EmpLoginForm() {
             })
     }
 
-    // const handleSubmit = async (values) => {
-    //     try {
-    //         const response = await fetch('/employeelogin', {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify(values, null, 2)
-    //         });
-
-    //         if (response.ok) {
-    //             console.log("Form submitted", values);
-    //             response.json().then((user) => onLogin(user))
-    //         } else {
-    //             console.error("An error occurred while submitting the form.");
-    //             setShowError(true)
-    //         } 
-    //     } catch (error) {
-    //         console.error('An error occurred while submitting the form.', error)
-    //     }
-    // }
-
-
     const initialValues = {
         username: '',
         password: ''

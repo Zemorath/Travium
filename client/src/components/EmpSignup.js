@@ -5,41 +5,24 @@ import styled from "styled-components";
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { signupEmployee } from '../redux/EmployeeSlice'
+import { useHistory } from "react-router-dom"
 
 
 function EmpSignUp() {
 
     const dispatch = useDispatch()
     const error = useSelector(state => state.employee.error)
+    const history = useHistory()
 
 
     const handleSubmit = async (values) => {
-        dispatch(signupEmployee(values));
+        dispatch(signupEmployee(values))
+            .then((result) => {
+                if (result.payload) {
+                    history.push("/")
+                }
+            })
     }
-
-    // const [errorMessage, setErrorMessage] = useState(false)
-
-    // const handleSubmit = async (values) => {
-    //     console.log(JSON.stringify(values, null, 2))
-    //     try {
-    //         const response = await fetch('/employeesignup', {
-    //             method: 'POST',
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify(values, null, 2),
-    //         });
-
-    //         if (response.ok) {
-    //             console.log("Form submitted", values);
-    //             response.json().then((user) => onLogin(user))
-    //         } else {
-    //             setErrorMessage(true);
-    //         }
-    //     } catch (error) {
-    //         console.error('An error occurred while submitting the form.', error)
-    //     }
-    // }
 
     const initialValues = {
         username: '', 

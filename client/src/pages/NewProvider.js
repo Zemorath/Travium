@@ -1,8 +1,7 @@
 import React from "react";
-// import { useFormik } from 'formik'
 import ProviderForm from "../components/ProviderForm";
 
-function NewProvider({ useState, user }) {
+function NewProvider({ user }) {
 
     return (
         <ProviderForm user={user}/>
