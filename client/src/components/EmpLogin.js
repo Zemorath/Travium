@@ -60,7 +60,7 @@ function EmpLoginForm() {
                     />
                     <ErrorMessage name='password' />
                 </FieldContainer>
-                {error && (<ErrorText>{error}t</ErrorText>)}
+                {error && (<ErrorText>{error}</ErrorText>)}
                 <FieldContainer>
                     <Button variant="fill" color="primary" type="submit">
                         Login
